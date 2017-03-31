@@ -1,0 +1,33 @@
+$color-gray: #eee;
+$schedule-border: 1px solid $color-gray;
+
+.schedule {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 900px;
+  width: 100%;
+  border-right: $schedule-border;
+  border-bottom: $schedule-border;
+}
+
+.schedule__cell {
+  width: 12.5%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-top: $schedule-border;
+  border-left: $schedule-border;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 3px;
+  
+  &.schedule__cell_empty {
+    background: $color-gray;
+  }
+}
+
+.schedule__row {
+  
+}
