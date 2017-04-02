@@ -1,11 +1,16 @@
-var path = require('path'),
+var webpack = require('webpack'),
+    path = require('path'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+var definePlugin = new webpack.DefinePlugin({
+  DEV : JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
+});
 
 module.exports = {
   entry: {
     app: [
-      './src/app',
+      './src/index',
       //'react-hot-loader/patch',
     ]
   },
