@@ -8,7 +8,7 @@ function withClickHandler(WrappedComponent) {
       this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(e) {
+    handleClick() {
       console.log(arguments);
     }
     

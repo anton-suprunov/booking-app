@@ -1,25 +1,33 @@
-var webpack = require('webpack'),
-    path = require('path'),
-    HtmlWebpackPlugin = require('html-webpack-plugin'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack'),
+  path = require('path'),
+  HtmlWebpackPlugin = require('html-webpack-plugin'),
+  ExtractTextPlugin = require('extract-text-webpack-plugin'),
+  definePlugin = new webpack.DefinePlugin({
+    DEV : JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
+  });
 
-var definePlugin = new webpack.DefinePlugin({
-  DEV : JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
-});
-
-module.exports = {
+const commonConfig = {
   entry: {
     app: [
       './src/index',
-      //'react-hot-loader/patch',
-    ]
+        //'react-hot-loader/patch',
+    ],
   },
   output: {
-      path: path.join(__dirname, './dist'),
-      filename: '[name].bundle.js',
+    path: path.join(__dirname, './dist'),
+    filename: '[name].bundle.js',
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true,
+        },
+      },
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
@@ -28,55 +36,69 @@ module.exports = {
           options: {
             presets: [
               'react',
-              ['env', { modules: false }]
-            ]
-          }
-        }
+                ['env', { modules: false }],
+            ],
+          },
+        },
       },
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           use: [{
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
-              sourceMap: true
-            }
+              sourceMap: true,
+            },
           }],
-          fallback: 'style-loader'
-        })
+          fallback: 'style-loader',
+        }),
       },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [{
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
-              sourceMap: true
-            }
+              sourceMap: true,
+            },
           }, {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
-              sourceMap: true
-            }
+              sourceMap: true,
+            },
           }],
-          fallback: "style-loader"
-        })
-      }
-    ]
+          fallback: 'style-loader',
+        }),
+      },
+    ],
   },
-  devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    compress: false,
-    port: 8080
-  },
-  devtool: "cheap-eval-source-map",
   plugins: [
     new HtmlWebpackPlugin({
-      template : './src/index.html'
+      template : './src/index.html',
     }),
     new ExtractTextPlugin({
       filename : 'css/[name].css',
-      allChunks: true
-    })
-  ]
+      allChunks: true,
+    }),
+  ],
+};
+
+const productionConfig = () => commonConfig;
+const developmentConfig = {
+  devServer: {
+    historyApiFallback: true,
+    stats: 'errors-only',
+    contentBase: path.join(__dirname, 'dist'),
+    compress: false,
+    port: 8080,
+  },
+  devtool: 'cheap-eval-source-map',
+};
+
+module.exports = (env) => {
+  if (env === 'production') {
+    return productionConfig;
+  } else {
+    return Object.assign({}, commonConfig, developmentConfig);
+  }
 };

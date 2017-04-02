@@ -8,15 +8,17 @@ function clickableButton(Btn) {
       this.handleClick = this.handleClick.bind(this);
     }
     
-    handleClick(event) {
+    handleClick() {
       alert('button clicked');
-      dosmthing();
     }
     
     render() {
-      return <Btn {...this.props} onClick={this.handleClick} />
+      return <Btn {...this.props} onClick={this.handleClick} />;
     }
-  }
+  };
 }
+
+
+
 
 export default clickableButton;
