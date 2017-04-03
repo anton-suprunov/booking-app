@@ -1,12 +1,18 @@
 const webpack = require('webpack'),
   path = require('path'),
+  merge = require('webpack-merge'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
+  
+  devConfig = require('./webpack.development.config.js'),
+  prodConfig = require('./webpack.production.config.js'),
+  
+  isProd = (process.env.NODE_ENV === 'production'),
   definePlugin = new webpack.DefinePlugin({
-    DEV : JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
+    DEV : JSON.stringify(JSON.parse(!isProd)),
   });
-
-const commonConfig = {
+    
+const defaultConfig = {
   entry: {
     app: [
       './src/index',
@@ -22,7 +28,6 @@ const commonConfig = {
       {
         test: /\.js$/,
         enforce: 'pre',
-
         loader: 'eslint-loader',
         options: {
           emitWarning: true,
@@ -41,35 +46,6 @@ const commonConfig = {
           },
         },
       },
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: [{
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-            },
-          }],
-          fallback: 'style-loader',
-        }),
-      },
-      {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [{
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-            },
-          }, {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-            },
-          }],
-          fallback: 'style-loader',
-        }),
-      },
     ],
   },
   plugins: [
@@ -77,28 +53,16 @@ const commonConfig = {
       template : './src/index.html',
     }),
     new ExtractTextPlugin({
-      filename : 'css/[name].css',
+      filename : './css/[name].css',
       allChunks: true,
     }),
-  ],
+  ]
 };
 
-const productionConfig = () => commonConfig;
-const developmentConfig = {
-  devServer: {
-    historyApiFallback: true,
-    stats: 'errors-only',
-    contentBase: path.join(__dirname, 'dist'),
-    compress: false,
-    port: 8080,
-  },
-  devtool: 'cheap-eval-source-map',
-};
-
-module.exports = (env) => {
-  if (env === 'production') {
-    return productionConfig;
-  } else {
-    return Object.assign({}, commonConfig, developmentConfig);
+module.exports = function() {
+  if (isProd) {
+    return merge(defaultConfig, prodConfig);
   }
-};
+  
+  return merge(defaultConfig, devConfig);
+}
