@@ -20,7 +20,12 @@ module.exports = {
               loader: 'postcss-loader',
               options: {
                 plugins: function() {
-                  return [ require('autoprefixer') ]
+                  return [ 
+                    require('autoprefixer'),
+                    require('stylelint')({
+                      ignoreFiles: 'node_modules/**/*.css',
+                    })
+                  ]
                 },
               },
             },
@@ -34,6 +39,17 @@ module.exports = {
           fallback: 'style-loader'
         }),
       },
+      {
+        test: /\.(png|jpg|svg)$/,
+        use: {
+          loader: 'url-loader',
+          options : {
+            publicPath : '../img/',
+            limit: 15000,
+            name: '[name].[ext]'
+          }
+        },
+      }
     ]
   }
 }

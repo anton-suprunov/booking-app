@@ -8,8 +8,10 @@ $schedule-border: 1px solid $color-gray;
   width: 100%;
   border-right: $schedule-border;
   border-bottom: $schedule-border;
-  
   box-shadow: 0 0 1px $color-gray;
+  
+  background-image: url(../img/small-img.png);
+  background-repeat: no-repeat;
 }
 
 .schedule__cell {

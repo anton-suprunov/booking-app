@@ -19,7 +19,10 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               plugins: function() {
-                return [ require('autoprefixer') ]
+                require('autoprefixer'),
+                require('stylelint')({
+                  ignoreFiles: 'node_modules/**/*.css',
+                })
               },
             },
           },
@@ -30,7 +33,11 @@ module.exports = {
             },
           }
         ],
-      }
+      },
+      {
+        test: /\.(png|jpg|svg)$/,
+        use: { loader: 'url-loader' },
+      },
     ]
   },
   devServer: {
