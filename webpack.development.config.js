@@ -7,7 +7,9 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          { loader: 'style-loader' },
+          {
+            loader: 'style-loader' 
+          },
           {
             loader: 'css-loader',
             options: {
@@ -19,10 +21,12 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               plugins: function() {
-                require('autoprefixer'),
-                require('stylelint')({
-                  ignoreFiles: 'node_modules/**/*.css',
-                })
+                return [
+                  require('autoprefixer'),
+                ]
+                //require('stylelint')({
+                  //ignoreFiles: 'node_modules/**/*.css',
+                //})
               },
             },
           },

@@ -1,3 +1,5 @@
+//TODO: css linter warnings due to being run after scss
+
 const webpack = require('webpack'),
   path = require('path'),
   merge = require('webpack-merge'),
@@ -26,6 +28,16 @@ const defaultConfig = {
   module: {
     rules: [
       {
+        // Capture eot, ttf, woff, and woff2
+        test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          }
+        },
+      },
+      {
         test: /\.js$/,
         enforce: 'pre',
         loader: 'eslint-loader',
@@ -52,10 +64,12 @@ const defaultConfig = {
     new HtmlWebpackPlugin({
       template : './src/index.html',
     }),
-    new ExtractTextPlugin({
-      filename : './css/[name].css',
-      allChunks: true,
-    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "vendor",
+      minChunks: function(module) {
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      }
+    })
   ]
 };
 

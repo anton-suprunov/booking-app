@@ -22,9 +22,9 @@ module.exports = {
                 plugins: function() {
                   return [ 
                     require('autoprefixer'),
-                    require('stylelint')({
-                      ignoreFiles: 'node_modules/**/*.css',
-                    })
+                    //require('stylelint')({
+                      //ignoreFiles: 'node_modules/**/*.css',
+                    //})
                   ]
                 },
               },
@@ -51,5 +51,12 @@ module.exports = {
         },
       }
     ]
-  }
+  },
+  devtool: 'source-map',
+  plugins : [
+    new ExtractTextPlugin({
+      filename : './css/[name].css',
+      allChunks: true,
+    })
+  ]
 }
