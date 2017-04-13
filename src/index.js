@@ -7,10 +7,10 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 injectTapEventPlugin();
 
+import './globals.scss';
 import App from './app/app';
 
-import './globals.scss';
-
+//import { bake } from './test-module';
 
 ReactDOM.render(
    <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>

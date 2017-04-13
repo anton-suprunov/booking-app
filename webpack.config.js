@@ -1,18 +1,16 @@
 //TODO: css linter warnings due to being run after scss
-
-const webpack = require('webpack'),
-  path = require('path'),
-  merge = require('webpack-merge'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin'),
+const dotenv = require('dotenv').config(),
+      webpack = require('webpack'),
+      path = require('path'),
+      merge = require('webpack-merge'),
+      HtmlWebpackPlugin = require('html-webpack-plugin'),
+      ExtractTextPlugin = require('extract-text-webpack-plugin'),
   
-  devConfig = require('./webpack.development.config.js'),
-  prodConfig = require('./webpack.production.config.js'),
+      devConfig = require('./webpack.development.config.js'),
+      prodConfig = require('./webpack.production.config.js'),
   
-  isProd = (process.env.NODE_ENV === 'production'),
-  definePlugin = new webpack.DefinePlugin({
-    DEV : JSON.stringify(JSON.parse(!isProd)),
-  });
+      isProd = (process.env.NODE_ENV === 'production');
+      //ENV = process.env.ENV = process.env.NODE_ENV = 'development';
     
 const defaultConfig = {
   entry: {
@@ -43,6 +41,7 @@ const defaultConfig = {
         loader: 'eslint-loader',
         options: {
           emitWarning: true,
+          fix: true
         },
       },
       {
@@ -55,12 +54,21 @@ const defaultConfig = {
               'react',
                 ['env', { modules: false }],
             ],
+            plugins : ['syntax-dynamic-import']
           },
         },
       },
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+        //'HMR': HMR,
+        //'API_URL': JSON.stringify(process.env.API_URL)
+      }
+    }),
     new HtmlWebpackPlugin({
       template : './src/index.html',
     }),
@@ -70,7 +78,10 @@ const defaultConfig = {
         return module.context && module.context.indexOf('node_modules') !== -1;
       }
     })
-  ]
+  ],
+  node: {
+    fs: "empty"
+  }
 };
 
 module.exports = function() {

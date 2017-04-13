@@ -1,7 +1,12 @@
 const webpack = require('webpack'),
   path = require('path'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin');
-      
+  ExtractTextPlugin = require('extract-text-webpack-plugin'),
+  CleanWebpackPlugin = require('clean-webpack-plugin'),
+  GitRevisionPlugin = require('git-revision-webpack-plugin'),
+  BabiliPlugin = require('babili-webpack-plugin'),    
+  OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
+  cssnano = require('cssnano');
+
 module.exports = {
   module: {
     rules: [
@@ -20,7 +25,7 @@ module.exports = {
               loader: 'postcss-loader',
               options: {
                 plugins: function() {
-                  return [ 
+                  return [
                     require('autoprefixer'),
                     //require('stylelint')({
                       //ignoreFiles: 'node_modules/**/*.css',
@@ -54,9 +59,39 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins : [
+    new CleanWebpackPlugin(['./dist']),
+    new OptimizeCSSAssetsPlugin({
+      cssProcessor: cssnano,
+      cssProcessorOptions: {
+        discardComments: {
+          removeAll: true,
+        },
+        safe: true,
+      },
+      canPrint: false,
+    }),
     new ExtractTextPlugin({
       filename : './css/[name].css',
       allChunks: true,
+    }),
+    new webpack.BannerPlugin({
+      banner: new GitRevisionPlugin().version(),
+    }),
+    //new BabiliPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress : true
+    }),
+    new OptimizeCSSAssetsPlugin({
+      cssProcessor: cssnano,
+      cssProcessorOptions: {
+        discardComments: {
+          removeAll: true,
+        },
+        // Run cssnano in safe mode to avoid
+        // potentially unsafe transformations.
+        safe: true,
+      },
+      canPrint: false,
     })
   ]
 }

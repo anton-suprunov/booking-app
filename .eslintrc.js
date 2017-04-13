@@ -12,8 +12,10 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended'
   ],
+  parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module',
+    allowImportExportEverywhere: true,
   },
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
