@@ -8,6 +8,10 @@ const webpack = require('webpack'),
   cssnano = require('cssnano');
 
 module.exports = {
+  output : {
+    chunkFilename: '[name].[chunkhash:8].js',
+    filename: '[name].[chunkhash:8].js',
+  },
   module: {
     rules: [
       {
@@ -51,7 +55,7 @@ module.exports = {
           options : {
             publicPath : '../img/',
             limit: 15000,
-            name: '[name].[ext]'
+            name: '[name].[hash:8].[ext]'
           }
         },
       }
@@ -60,38 +64,38 @@ module.exports = {
   devtool: 'source-map',
   plugins : [
     new CleanWebpackPlugin(['./dist']),
+
     new OptimizeCSSAssetsPlugin({
       cssProcessor: cssnano,
       cssProcessorOptions: {
         discardComments: {
-          removeAll: true,
+          removeAll: true
         },
-        safe: true,
+        safe: true
       },
-      canPrint: false,
+      canPrint: false
     }),
+
     new ExtractTextPlugin({
-      filename : './css/[name].css',
-      allChunks: true,
+      filename : './css/[name].[contenthash:8].css',
+      allChunks: true
     }),
+
     new webpack.BannerPlugin({
-      banner: new GitRevisionPlugin().version(),
+      banner: new GitRevisionPlugin().version()
     }),
+
+  /**
+   * HashedModuleIdsPlugin generates module IDs based on module paths.
+   * This is more stable than relying on the default order based numeric module IDs.
+   */
+    new webpack.HashedModuleIdsPlugin(),
+
     //new BabiliPlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      compress : true
-    }),
-    new OptimizeCSSAssetsPlugin({
-      cssProcessor: cssnano,
-      cssProcessorOptions: {
-        discardComments: {
-          removeAll: true,
-        },
-        // Run cssnano in safe mode to avoid
-        // potentially unsafe transformations.
-        safe: true,
-      },
-      canPrint: false,
+      compress : {
+        warnings: false
+      }
     })
   ]
 }

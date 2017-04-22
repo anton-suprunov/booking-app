@@ -1,12 +1,16 @@
 import React from 'react';
-import Moment from 'moment';
-import { extendMoment } from 'moment-range';
+//import Moment from 'moment';
+//import { extendMoment } from 'moment-range';
+import startOfISOWeek from 'date-fns/start_of_iso_week';
+import endOfISOWeek from 'date-fns/end_of_iso_week';
+import eachDay from 'date-fns/each_day';
+import format from 'date-fns/format';
 import classNames from 'classnames';
 
 import './schedule.scss';
 
-const moment = extendMoment(Moment),
-  baseClass = 'schedule';
+const baseClass = 'schedule';
+//moment = extendMoment(Moment),
 
 function Cell(props) {
   const className = classNames(baseClass + '__cell', {
@@ -24,11 +28,14 @@ class Schedule extends React.Component {
   constructor(props) {
     super(props);
     
-    const firstDayOfWeek = moment().startOf('isoweek'),
-      lastDayOfWeek = moment().endOf('isoweek'),
-      weekRange = moment.range(firstDayOfWeek, lastDayOfWeek);
-    
-    this.week = Array.from( weekRange.by('days') ).map((day) => day.format('ddd, DD MMM') ),
+    const firstDayOfWeek = startOfISOWeek(new Date()),
+      lastDayOfWeek = endOfISOWeek(new Date()),
+      //weekRange = moment.range(firstDayOfWeek, lastDayOfWeek);
+      weekRange = eachDay(firstDayOfWeek, lastDayOfWeek);
+
+    console.log(weekRange);
+
+    this.week = weekRange.map( (day) => format(day, 'ddd, DD MMM') ),
     this.times = [ '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'];
   }
   

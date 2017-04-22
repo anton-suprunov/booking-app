@@ -10,11 +10,9 @@ injectTapEventPlugin();
 import './globals.scss';
 import App from './app/app';
 
-//import { bake } from './test-module';
-
 ReactDOM.render(
    <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-    <App />
+    <App data='something' data2='something' />
   </MuiThemeProvider>,
   document.getElementById('root')
 );

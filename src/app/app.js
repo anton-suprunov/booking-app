@@ -1,10 +1,12 @@
 import React from 'react';
 import Drawer from './Drawer';
 import Schedule from '../schedule/schedule';
+import EventForm from '../forms/event-form';
 import classNames from 'classnames';
 import AppBar from 'material-ui/AppBar';
 import withWidth, {LARGE} from 'material-ui/utils/withWidth';
 
+import './app.scss';
 
 class App extends React.Component {
   constructor(props) {
@@ -33,13 +35,14 @@ class App extends React.Component {
     return (
       <div className="app">
         <AppBar
-          className={classNames('app-bar', {'expanded': this.state.drawerOpen})}
+          className={classNames('bar', { 'bar_expanded': this.state.drawerOpen})}
           onLeftIconButtonTouchTap={this.handleDrawerToggle}
           title=""
         />
         <Drawer open={this.state.drawerOpen} />
-        <div className={classNames('app-content', {'expanded': this.state.drawerOpen})}>
-        <Schedule />
+        <div className={classNames('content', { 'content_expanded': this.state.drawerOpen})}>
+          <Schedule />
+          <EventForm />
         </div>
       </div>
     );

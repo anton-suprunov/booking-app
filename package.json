@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
-    "build": "cross-env NODE_ENV=production webpack --progress --profile --colors",
+    "build": "cross-env NODE_ENV=production webpack --progress --colors",
+    "stats": "cross-env NODE_ENV=production webpack --profile --json > stats.json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:js": "eslint src/ webpack.*.js --cache",
     "lint:style": "stylelint src/**/*.css"
@@ -45,10 +46,9 @@
   "dependencies": {
     "axios": "^0.15.3",
     "classnames": "^2.2.5",
+    "date-fns": "^1.28.3",
     "dotenv": "^4.0.0",
     "material-ui": "^0.17.1",
-    "moment": "^2.18.1",
-    "moment-range": "^3.0.3",
     "normalize.css": "^6.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",

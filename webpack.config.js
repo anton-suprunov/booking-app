@@ -31,7 +31,7 @@ const defaultConfig = {
         use: {
           loader: 'file-loader',
           options: {
-            name: '[name].[ext]',
+            name: '[name].[hash:8].[ext]',
           }
         },
       },
@@ -77,6 +77,14 @@ const defaultConfig = {
       minChunks: function(module) {
         return module.context && module.context.indexOf('node_modules') !== -1;
       }
+    }),
+    /**
+     * Extracts manifest file, which contains list of files that webpack will load,
+     * this technique is needed to prevent hash update on vendor file when only app code changes
+     */
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "manifest",
+      minChunks: Infinity
     })
   ],
   node: {
