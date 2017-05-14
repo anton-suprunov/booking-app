@@ -23,6 +23,11 @@ const defaultConfig = {
     path: path.join(__dirname, './dist'),
     filename: '[name].bundle.js',
   },
+  performance: {
+   maxAssetSize: 100000,
+   maxEntrypointSize: 300000,
+   hints: 'warning'
+ },
   module: {
     rules: [
       {
