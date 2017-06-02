@@ -7,7 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 injectTapEventPlugin();
 
-import './globals.scss';
+import './globals.css';
 import App from './app/app';
 
 ReactDOM.render(

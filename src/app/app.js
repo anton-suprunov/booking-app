@@ -6,15 +6,15 @@ import classNames from 'classnames';
 import AppBar from 'material-ui/AppBar';
 import withWidth, {LARGE} from 'material-ui/utils/withWidth';
 
-import './app.scss';
+import styles from './app.css';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       drawerOpen: true,
     };
-    this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
   }
   
   componentWillReceiveProps(nextProps) {
@@ -25,7 +25,7 @@ class App extends React.Component {
     }
   }
   
-  handleDrawerToggle() {
+  handleDrawerToggle = () => {
     this.setState({
       drawerOpen: !this.state.drawerOpen,
     });
@@ -35,12 +35,20 @@ class App extends React.Component {
     return (
       <div className="app">
         <AppBar
-          className={classNames('bar', { 'bar_expanded': this.state.drawerOpen})}
+          className={classNames({
+            [styles.bar]: !this.state.drawerOpen, 
+            [styles.barExpanded]: this.state.drawerOpen,
+          })}
           onLeftIconButtonTouchTap={this.handleDrawerToggle}
           title=""
         />
+        
         <Drawer open={this.state.drawerOpen} />
-        <div className={classNames('content', { 'content_expanded': this.state.drawerOpen})}>
+
+        <div className={classNames({
+          [styles.content]: !this.state.drawerOpen, 
+          [styles.contentExpanded]: this.state.drawerOpen,
+        })}>
           <Schedule />
           <EventForm />
         </div>

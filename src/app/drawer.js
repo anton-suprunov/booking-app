@@ -4,20 +4,15 @@ import MenuItem from 'material-ui/MenuItem';
 //import RaisedButton from 'material-ui/RaisedButton';
 //import classNames from 'classnames';
 
-import './drawer.scss';
-
-function AppDrawer(props) {
+export default function AppDrawer(props) {
   return (
-      <Drawer open={props.open} docked={true}>
-        <MenuItem>Menu Item</MenuItem>
-        <MenuItem>Menu Item 2</MenuItem>
-      </Drawer>
+    <Drawer open={props.open} docked={true}>
+      <MenuItem>Menu Item</MenuItem>
+      <MenuItem>Menu Item 2</MenuItem>
+    </Drawer>
   );
 }
 
 AppDrawer.propTypes = {
   open : React.PropTypes.bool,
 };
-
-
-export default AppDrawer;

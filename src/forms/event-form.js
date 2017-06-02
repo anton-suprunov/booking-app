@@ -14,6 +14,7 @@ function Input(props) {
     />
   );
 }
+
 Input.propTypes = {
   name : React.PropTypes.string,
   value : React.PropTypes.string,

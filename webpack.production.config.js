@@ -15,6 +15,27 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                modules: true,
+                importLoaders: 1,
+                camelCase: 'dashes',
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              },
+            },
+            { 
+              loader: 'postcss-loader'
+            }
+          ],
+          fallback: 'style-loader'
+        })
+      },
+      {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [
@@ -31,9 +52,7 @@ module.exports = {
                 plugins: function() {
                   return [
                     require('autoprefixer'),
-                    //require('stylelint')({
-                      //ignoreFiles: 'node_modules/**/*.css',
-                    //})
+                    
                   ]
                 },
               },

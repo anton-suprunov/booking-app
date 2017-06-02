@@ -26,7 +26,7 @@ const defaultConfig = {
   performance: {
    maxAssetSize: 100000,
    maxEntrypointSize: 300000,
-   hints: 'warning'
+   //hints: 'warning'
  },
   module: {
     rules: [
@@ -59,7 +59,10 @@ const defaultConfig = {
               'react',
                 ['env', { modules: false }],
             ],
-            plugins : ['syntax-dynamic-import']
+            plugins : [
+            'syntax-dynamic-import',
+            'transform-class-properties'
+            ]
           },
         },
       },

@@ -5,6 +5,25 @@ module.exports = {
   module : {
     rules : [
       {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true,
+              importLoaders: 1,
+              camelCase: 'dashes',
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            },
+          },
+          { 
+            loader: 'postcss-loader'
+          }
+        ]
+      },
+      {
         test: /\.scss$/,
         use: [
           {
@@ -13,20 +32,18 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
-              //modules: true // enables css-modules
+              sourceMap: true
             },
           }, 
           {
             loader: 'postcss-loader',
             options: {
+              sourceMap: true,
               plugins: function() {
                 return [
                   require('autoprefixer'),
                 ]
-                //require('stylelint')({
-                  //ignoreFiles: 'node_modules/**/*.css',
-                //})
+                
               },
             },
           },

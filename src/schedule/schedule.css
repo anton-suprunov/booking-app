@@ -1,0 +1,33 @@
+@import "../shared/colors.css";
+
+.wrap {
+  margin: 10px 0;
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 900px;
+  width: 100%;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 0 1px var(--color-border);
+}
+
+.cell {
+  width: 12.5%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+  border-left: 1px solid var(--color-border);
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 3px;
+}
+
+.cell_empty {
+  composes: cell;  
+  background: var(--color-border);
+}
+
+.row {}

@@ -1,20 +1,18 @@
 import React from 'react';
-//import Moment from 'moment';
-//import { extendMoment } from 'moment-range';
+
 import startOfISOWeek from 'date-fns/start_of_iso_week';
 import endOfISOWeek from 'date-fns/end_of_iso_week';
 import eachDay from 'date-fns/each_day';
 import format from 'date-fns/format';
 import classNames from 'classnames';
 
-import './schedule.scss';
-
-const baseClass = 'schedule';
-//moment = extendMoment(Moment),
+//import './schedule.scss';
+import styles from './schedule.css';
 
 function Cell(props) {
-  const className = classNames(baseClass + '__cell', {
-    [baseClass + '__cell_empty'] : props.isEmpty,
+  const className = classNames({
+    [styles.cell]: !props.isEmpty,
+    [styles.cell_empty]: props.isEmpty,
   });
   return <div className={className}>{props.value}</div>;
 }
@@ -54,10 +52,10 @@ class Schedule extends React.Component {
   
   render() {
     return (
-      <div className={baseClass}>
+      <div className={styles.wrap}>
         <Cell value={''} key="day0" isEmpty={true} />
-        {this.week.map((value, index) => <Cell value={value} key={'day' + (index + 1)} />)}
-        {this.getRows()}
+        { this.week.map((value, index) => <Cell value={value} key={'day' + (index + 1)} />) }
+        { this.getRows() }
       </div>
     );
   }
