@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import startOfISOWeek from 'date-fns/start_of_iso_week';
 import endOfISOWeek from 'date-fns/end_of_iso_week';
@@ -18,8 +19,8 @@ function Cell(props) {
 }
 
 Cell.propTypes = {
-  isEmpty : React.PropTypes.bool,
-  value : React.PropTypes.string,
+  isEmpty : PropTypes.bool,
+  value : PropTypes.string,
 };
 
 class Schedule extends React.Component {

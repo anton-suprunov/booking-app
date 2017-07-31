@@ -22,6 +22,7 @@ const defaultConfig = {
   output: {
     path: path.join(__dirname, './dist'),
     filename: '[name].bundle.js',
+    publicPath : '/',
   },
   performance: {
    maxAssetSize: 100000,
@@ -61,7 +62,8 @@ const defaultConfig = {
             ],
             plugins : [
             'syntax-dynamic-import',
-            'transform-class-properties'
+            'transform-class-properties',
+            'transform-object-rest-spread'
             ]
           },
         },

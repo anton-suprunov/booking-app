@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 //import RaisedButton from 'material-ui/RaisedButton';
@@ -14,5 +15,5 @@ export default function AppDrawer(props) {
 }
 
 AppDrawer.propTypes = {
-  open : React.PropTypes.bool,
+  open : PropTypes.bool,
 };

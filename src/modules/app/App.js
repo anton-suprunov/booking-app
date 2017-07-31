@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import Drawer from './Drawer';
-import Schedule from '../schedule/schedule';
-import EventForm from '../forms/event-form';
+import Schedule from '../../schedule/schedule';
+import EventForm from '../../forms/event-form';
 import classNames from 'classnames';
 import AppBar from 'material-ui/AppBar';
 import withWidth, {LARGE} from 'material-ui/utils/withWidth';
 
 import styles from './app.css';
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
     
@@ -58,7 +60,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  width : React.PropTypes.number,
+  width : PropTypes.number,
 };
 
 export default withWidth()(App);

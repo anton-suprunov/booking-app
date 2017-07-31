@@ -1,51 +1,35 @@
 import React from 'react';
-//import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 const baseClass = 'form';
-
-function Input(props) {
-  return (
-    <input 
-      type="text" 
-      name={props.name}
-      value={props.value} 
-      onChange={props.onChange}
-      placeholder={props.placeholder}
-    />
-  );
-}
-
-Input.propTypes = {
-  name : React.PropTypes.string,
-  value : React.PropTypes.string,
-  placeholder : React.PropTypes.string,
-  onChange : React.PropTypes.func,
-};
 
 class EventForm extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      inputValue: '',
+    };
   }
   
-  onInputChange(e) {
-    console.log(e);
+  onInputChange = () => {
+    //console.log(this.titleInput.value);
+    this.setState({ inputValue: event.target.value });
   }
-  
   render() {
+    const { inputValue } = this.props;
     return (
       <form className={baseClass}>
         <p>
-          <Input name="title" onChange={this.onInputChange} placeholder="hhhh" />
+          <input value={this.state.inputValue} name="title" onChange={this.onInputChange} placeholder="mmm" />
         </p>
-        
-        <p>
-          <Input name="title2" onChange={this.onInputChange} placeholder="123" />
-        </p>
+        <input type="button" onClick={this.onInputChange} value="click me" />
       </form>
     );
   }
 }
+EventForm.propTypes = {
+  inputValue: PropTypes.string,
+};
 
 
 export default EventForm;
