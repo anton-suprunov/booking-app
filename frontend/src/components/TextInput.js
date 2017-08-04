@@ -9,8 +9,6 @@ const FormInput = ({
   fullWidth = false,
   ...props
 }) => {
-  console.log(props);
-  
   return <TextField
     type={type}
     fullWidth={fullWidth}
