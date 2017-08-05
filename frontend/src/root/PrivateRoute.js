@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 
 import Auth from '../modules/auth/';
 
-let PrivateRoute = ({ component, isAuthentificated, redirectTo, ...props }) => {
+const redirectTo = '/auth/login';
+
+let PrivateRoute = ({ component, isAuthentificated, ...props }) => {
   return (
     isAuthentificated ? 
       <Route component={component} {...props} /> :
@@ -20,7 +22,6 @@ let PrivateRoute = ({ component, isAuthentificated, redirectTo, ...props }) => {
 PrivateRoute.propTypes = {
   component: PropTypes.func || PropTypes.node,
   isAuthentificated: PropTypes.bool,
-  redirectTo: PropTypes.string,
   location: PropTypes.object,
 };
 

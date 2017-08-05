@@ -6,10 +6,13 @@ import {
   Switch, 
 } from 'react-router-dom';
 
-import configureStore from './configureStore';
+import configureStore from '../store/configureStore';
 import PrivateRoute from './PrivateRoute';
+
+import App from '../app/App';
 import Auth from '../modules/auth/';
-import App from '../modules/app/App';
+import Schedule from '../modules/schedule/';
+
 
 const store = configureStore();
 
@@ -24,11 +27,9 @@ class Root extends Component {
         <Router>
           <Switch>
             <Route path={'/' + Auth.consts.NAME} component={Auth.components.Root} />
-            <PrivateRoute 
-              path="/" 
-              component={App}
-              redirectTo='/auth/login'
-            />
+            <App>
+              <PrivateRoute path="/" component={Schedule.components.Schedule} />
+            </App>
           </Switch>
         </Router>
       </Provider>

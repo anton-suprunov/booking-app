@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import Drawer from './Drawer';
-import Schedule from '../../schedule/schedule';
-import EventForm from '../../forms/event-form';
 import classNames from 'classnames';
+
 import AppBar from 'material-ui/AppBar';
 import withWidth, {LARGE} from 'material-ui/utils/withWidth';
+
+import Drawer from './Drawer';
 
 import styles from './app.css';
 
@@ -34,6 +33,8 @@ class App extends Component {
   }
 
   render() {
+    const { children } = this.props;
+    console.log(children);
     return (
       <div className="app">
         <AppBar
@@ -51,8 +52,7 @@ class App extends Component {
           [styles.content]: !this.state.drawerOpen, 
           [styles.contentExpanded]: this.state.drawerOpen,
         })}>
-          <Schedule />
-          <EventForm />
+          {children}
         </div>
       </div>
     );
@@ -60,7 +60,8 @@ class App extends Component {
 }
 
 App.propTypes = {
-  width : PropTypes.number,
+  width: PropTypes.number,
+  children: PropTypes.node,
 };
 
 export default withWidth()(App);

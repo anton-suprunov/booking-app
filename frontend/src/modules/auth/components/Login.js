@@ -84,7 +84,7 @@ class Login extends Component {
           <label className={styles.label} htmlFor="email">
             <TextInput 
               name="email"
-              hintText="Enter your email"
+              hintText="Your email"
               fullWidth={true}
               value={this.state.email}
               onChange={this.handleInputChange}
@@ -97,7 +97,7 @@ class Login extends Component {
             <TextInput
               name="password"
               type="password"
-              hintText="Enter your password"
+              hintText="Your password"
               fullWidth={true}
               value={this.state.password}
               onChange={this.handleInputChange}
