@@ -2,28 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 
-const FormInput = ({
-  // input - redux form prop
-  //label,
+const TextInput = ({
+  input,
+  label,
   type = 'text',
   fullWidth = false,
   ...props
-}) => {
-  return <TextField
+}) => (
+  <TextField
     type={type}
     fullWidth={fullWidth}
-    { ...props }
-    //hintText={label}
-    // {...input} 
+    hintText={label}
+    {...input}
     //errorText={props.touched && props.error}
-  />;
-};
-FormInput.propTypes = {
+  />
+);
+TextInput.propTypes = {
   type: PropTypes.string,
   fullWidth: PropTypes.bool,
   props: PropTypes.object,
-  //label: PropTypes.string.isRequired,
-  //input: PropTypes.object,
+  label: PropTypes.string.isRequired,
+  input: PropTypes.object,
 };
 
-export default FormInput;
+export default TextInput;

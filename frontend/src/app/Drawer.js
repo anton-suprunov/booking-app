@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { Link } from 'react-router-dom';
+
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 //import RaisedButton from 'material-ui/RaisedButton';
@@ -16,8 +19,6 @@ import Dashboard from 'material-ui/svg-icons/action/dashboard';
 import Logout from 'material-ui/svg-icons/action/exit-to-app';
 import Divider from 'material-ui/Divider';
 
-//const handleTouchTap = () => {};
-
 export default function AppDrawer(props) {
   return (
     <Drawer open={props.open} docked={true}>
@@ -32,7 +33,11 @@ export default function AppDrawer(props) {
       <MenuItem leftIcon={<People />}>Преподаватели</MenuItem>
       <MenuItem leftIcon={<Accessebility />}>Занятия</MenuItem>
       <Divider />
-      <MenuItem leftIcon={<Lock />}>Администраторы</MenuItem>
+      <MenuItem 
+        leftIcon={<Lock />} 
+        containerElement={<Link to={'/users'} />}
+        primaryText="Администраторы"
+      />
       <MenuItem leftIcon={<Logout />}>Выйти из аккаунта</MenuItem>
     </Drawer>
   );

@@ -1,0 +1,12 @@
+.add-btn {
+  margin-top: 20px;
+  float: right
+}
+
+.title {
+  composes: title from '../../shared/forms.css';
+  margin-top: 30px;
+  font-size: 24px;
+}
+.label { composes: label from '../../shared/forms.css'; }
+.submit { composes: submit from '../../shared/forms.css'; }

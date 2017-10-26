@@ -11,6 +11,7 @@ import PrivateRoute from './PrivateRoute';
 
 import App from '../app/App';
 import Auth from '../modules/auth/';
+import Users from '../modules/users/';
 import Schedule from '../modules/schedule/';
 
 
@@ -28,7 +29,11 @@ class Root extends Component {
           <Switch>
             <Route path={'/' + Auth.consts.NAME} component={Auth.components.Root} />
             <App>
-              <PrivateRoute path="/" component={Schedule.components.Schedule} />
+              <Switch>
+                <Route path={'/' + Users.consts.NAME} component={Users.components.Root} />
+                <Route path='/' component={Schedule.components.Schedule} />
+                {/*<PrivateRoute path="/" component={Schedule.components.Schedule} />*/}
+              </Switch>
             </App>
           </Switch>
         </Router>

@@ -1,5 +1,5 @@
 export default {
   API: {
-    users: 'http://localhost:3000/users/',
+    login: 'http://localhost:3000/login/',
   },
 };

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { withRouter } from 'react-router-dom';
 
 import AppBar from 'material-ui/AppBar';
 import withWidth, {LARGE} from 'material-ui/utils/withWidth';
 
 import Drawer from './Drawer';
-
 import styles from './app.css';
 
 class App extends Component {
@@ -33,8 +33,13 @@ class App extends Component {
   }
 
   render() {
-    const { children } = this.props;
-    console.log(children);
+    const { children, location } = this.props;
+    
+    let title = '';
+    if (location.pathname.indexOf('/users') === 0) {
+      title = 'Администраторы';
+    }
+    
     return (
       <div className="app">
         <AppBar
@@ -43,7 +48,7 @@ class App extends Component {
             [styles.barExpanded]: this.state.drawerOpen,
           })}
           onLeftIconButtonTouchTap={this.handleDrawerToggle}
-          title=""
+          title={title}
         />
         
         <Drawer open={this.state.drawerOpen} />
@@ -62,6 +67,9 @@ class App extends Component {
 App.propTypes = {
   width: PropTypes.number,
   children: PropTypes.node,
+  location: PropTypes.object,
 };
 
-export default withWidth()(App);
+export default withRouter(
+  withWidth()(App)
+);

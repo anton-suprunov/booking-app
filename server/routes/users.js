@@ -6,7 +6,6 @@ var email = 'anton@mail.com';
 var password = '123';
 
 router.post('/', function(req, res, next) {
-  console.log(req);
   if (req.body && req.body.email === email && req.body.password === password) {
     res.send(JSON.stringify({
       status: 'ok'

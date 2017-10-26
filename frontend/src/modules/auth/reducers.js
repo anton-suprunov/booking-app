@@ -14,8 +14,11 @@ const hasErrored = (state = false, action) => {
   switch (action.type) {
   case LOGIN_REQUEST: 
     return false;
-  case LOGIN_SUCCESS:
-    return (action.res !== 'ok');
+  case LOGIN_ERROR: {
+    console.log(action);
+    return true;
+    //return (action.res !== 'ok');
+  }
   default:
     return state;
   }
