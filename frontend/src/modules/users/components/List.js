@@ -1,31 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import isEmail from 'validator/lib/isEmail';
-
 import { Link } from 'react-router-dom';
 
-//import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import {
+  Table,
+  TableBody,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
-import Snack from '../../../components/Snack';
-import TextInput from '../../../components/TextInput';
-import * as actions from '../actions';
+import config from 'config';
+import Snack from 'components/Snack';
+import TextInput from 'components/TextInput';
+import { 
+  fetch,
+  deleteUser,
+} from '../actions';
 import * as selectors from '../selectors';
 
 import styles from '../styles.css';
 
 class List extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      
-    };
+  componentDidMount() {
+    this.props.fetch();
   }
 
   render() {
+    const { users, deleteUser } = this.props;
     return (
       <div>
         <RaisedButton
@@ -34,18 +38,42 @@ class List extends Component {
           className={styles.addBtn} 
           containerElement={<Link to="/users/create" />}
         />
+
+        <Table selectable={false} style={{
+          maxWidth: '90%',
+        }}>
+          <TableBody displayRowCheckbox={false}>
+          { 
+            users.length && users.map(user =>   
+              <TableRow key={user._id} hoverable={true}>
+                <TableRowColumn>{user.username}</TableRowColumn>
+                <TableRowColumn></TableRowColumn>
+                <TableRowColumn>
+                  <FlatButton label="Edit" primary={true} />
+                  <FlatButton label="Delete" secondary={true} onClick={ () => deleteUser(user._id) } />
+                </TableRowColumn>
+              </TableRow> 
+            )
+          }
+          </TableBody>
+        </Table>
       </div>
     );
   }
 }
-List.propTypes = {};
+List.propTypes = {
+  fetch: PropTypes.func,
+  deleteUser: PropTypes.func,
+  users: PropTypes.array,
+};
 
 export { List };
 
 const mapState = state => ({
-  //isAuthentificated: isAuthentificated(state),
+  users: selectors.getUsers(state),
 });
 
-export default connect(mapState, { 
-  ...actions,
+export default connect(mapState, {
+  fetch,
+  deleteUser,
 })(List);

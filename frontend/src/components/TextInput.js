@@ -7,22 +7,24 @@ const TextInput = ({
   label,
   type = 'text',
   fullWidth = false,
-  ...props
+  meta: { touched, error, warning },
 }) => (
   <TextField
     type={type}
     fullWidth={fullWidth}
     hintText={label}
     {...input}
-    //errorText={props.touched && props.error}
+    errorText={touched && error}
   />
 );
 TextInput.propTypes = {
   type: PropTypes.string,
   fullWidth: PropTypes.bool,
-  props: PropTypes.object,
+  meta: PropTypes.object,
   label: PropTypes.string.isRequired,
   input: PropTypes.object,
+  touched: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 export default TextInput;

@@ -1,100 +1,124 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux'; 
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
-import isEmail from 'validator/lib/isEmail';
-/*import { 
-  Field, 
-  Form,
-  actions as formActions, 
-} from 'react-redux-form';*/
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
-import Snack from '../../../components/Snack';
-import { create } from '../actions';
-import TextInput from '../../../components/TextInput';
+import config from 'config';
+import * as validations from 'shared/validations';
+import Snack from 'components/Snack';
+import { 
+  create,
+  resetUserCreated,
+ } from '../actions';
+import TextInput from 'components/TextInput';
 import * as selectors from '../selectors';
 
 import styles from '../styles.css';
 
-const UserForm = ({ hasErrored, handleSubmit, onSubmit }) => {
-  return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h1 className={styles.title}>Добавить администратора</h1>
-        <label className={styles.label} htmlFor="email">
-          <Field
-            name="email"
-            type="text"
-            label="Email"
-            fullWidth={true}
-            component={TextInput} 
-          />          
-        </label>
+class UserForm extends Component {
+  componentWillUnmount() {
+    this.props.onUnmount();
+  }
 
-        <label className={styles.label} htmlFor="password">
-          <Field
-            name="password"
-            type="password"
-            label="Password"
-            fullWidth={true}
-            component={TextInput}
+  render() {
+    const { hasErrored, handleSubmit, onSubmit, userCreated } = this.props;
+    if (userCreated) {
+      return <Redirect to="/users" />;
+    }
+
+    return (
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h1 className={styles.title}>Добавить администратора</h1>
+          <label className={styles.label} htmlFor="email">
+            <Field
+              name="email"
+              type="text"
+              label="Email"
+              fullWidth={true}
+              component={TextInput} 
+              validate={[ validations.required, validations.isEmail ]}
+            />          
+          </label>
+
+          <label className={styles.label} htmlFor="password">
+            <Field
+              name="password"
+              type="password"
+              label="Password"
+              fullWidth={true}
+              component={TextInput}
+              validate={[ validations.required, validations.minLength5 ]}
+            />
+          </label>
+
+          <label className={styles.label} htmlFor="password2">
+            <Field
+              name="password2"
+              type="password"
+              label="Confirm password"
+              fullWidth={true}
+              component={TextInput}
+              validate={[ 
+                validations.required, 
+                validations.minLength5, 
+                validations.passwordsMatch,
+              ]}
+            />          
+          </label>
+
+          <RaisedButton 
+            type="submit"
+            label="Add User" 
+            primary={true}
+            className={styles.submit} 
           />
-        </label>
 
-        <label className={styles.label} htmlFor="password">
-          <Field
-            name="password2"
-            type="password"
-            label="Confirm password"
-            fullWidth={true}
-            component={TextInput}
-          />          
-        </label>
+          <div className={styles.cancel}>
+            <FlatButton 
+              label="Cancel" 
+              secondary={true}
+              containerElement={ <Link to="/users" /> }
+            />
+          </div>
 
-        <RaisedButton 
-          type="submit"
-          label="Add User" 
-          primary={true}
-          className={styles.submit} 
+        </form>
+
+        <Snack 
+          open={userCreated}
+          message="New administrator succesfully added"
         />
-      </form>
-
-      <Snack 
-        open={false}
-        message="Something is wrong"
-      />
-    </div>
-  );
-};
+      </div>
+    );
+  }
+}
 
 UserForm.propTypes = {
   hasErrored: PropTypes.bool,
   dispatch: PropTypes.func,
   handleSubmit: PropTypes.func,
   onSubmit: PropTypes.func,
+  onUnmount: PropTypes.func,
+  userCreated: PropTypes.bool,
 };
 
 export { UserForm };
 
 const mapState = state => ({
-  //isAuthentificated: isAuthentificated(state),
+  userCreated: selectors.userCreated(state),
 });
 
-const mapDispatch = (dispatch, { history }) => {
-  return {
-    create,
-    onSubmit: (values) => {
-      console.log(values);
-      // dispatch
-    },
-  };
-};
-
-export default connect(mapState, mapDispatch)(
+export default connect(mapState, {
+  onSubmit: create,
+  onUnmount: resetUserCreated,
+})(
   reduxForm({
     form: 'users',
   })(UserForm)

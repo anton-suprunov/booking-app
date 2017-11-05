@@ -1,5 +1,8 @@
+const apiBase = 'http://localhost:3000';
+
 export default {
   API: {
-    login: 'http://localhost:3000/login/',
+    login: `${apiBase}/login/`,
+    users: `${apiBase}/users/`,
   },
 };

@@ -24,6 +24,12 @@ const defaultConfig = {
     filename: '[name].bundle.js',
     publicPath : '/',
   },
+  resolve : {
+    modules: [
+      path.resolve('./node_modules'),
+      path.resolve('./src'),
+    ]
+  },
   performance: {
    maxAssetSize: 100000,
    maxEntrypointSize: 300000,

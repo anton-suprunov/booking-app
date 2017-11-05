@@ -2,7 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 
-router.post('/', 
+router.post('/',
   passport.authenticate('local', { failWithError: true }), 
   function(req, res) {
     console.log('this should be called in case of successfull request auth login success');

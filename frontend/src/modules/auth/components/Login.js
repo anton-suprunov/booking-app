@@ -77,6 +77,7 @@ class Login extends Component {
     if (isAuthentificated) {
       return <Redirect to="" />;
     }
+
     return (
       <div>
         <form onSubmit={this.handleSubmit} className={styles.container}>
@@ -116,7 +117,6 @@ class Login extends Component {
           open={hasErrored}
           message="Login details are incorrect"
         />
-
       </div>
     );
   }
