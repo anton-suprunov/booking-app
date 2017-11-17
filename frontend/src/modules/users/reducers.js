@@ -8,7 +8,7 @@ import {
   FETCH_SUCCESS,
   FETCH_ERROR,
   DELETE_SUCCESS,
-  RESET_USER_CREATED,
+  FORM_LEAVE,
 } from './actions';
 
 const byId = (state = {}, action) => {
@@ -47,7 +47,8 @@ const allIds = (state = [], action) => {
     return action.users.map(user => user._id);
   }
   case DELETE_SUCCESS: {
-    return state.filter(user => user._id === action.id);
+    let newState = state.filter(userId => userId !== action.id);
+    return newState;
   }
   default: 
     return state;
@@ -60,7 +61,7 @@ const userCreated = (state = false, action) => {
     return true;
   case CREATE_REQUEST:
   case CREATE_ERROR:
-  case RESET_USER_CREATED:
+  case FORM_LEAVE:
     return false; 
   default:
     return state;

@@ -18,7 +18,7 @@ export const DELETE_REQUEST = `${consts.NAME}_DELETE_REQUEST`;
 export const DELETE_SUCCESS = `${consts.NAME}_DELETE_SUCCESS`;
 export const DELETE_ERROR = `${consts.NAME}_DELETE_ERROR`;
 
-export const RESET_USER_CREATED = `${consts.NAME}_RESET_CREATED`;
+export const FORM_LEAVE = `${consts.NAME}_FORM_LEAVE`;
 
 const createSuccess = (res) => ({
   type: CREATE_SUCCESS,
@@ -80,6 +80,6 @@ export const deleteUser = (id) => dispatch => {
     .catch(err => dispatch(deleteError(err)));
 };
 
-export const resetUserCreated = () => ({
-  type: RESET_USER_CREATED,
+export const formLeave = () => ({
+  type: FORM_LEAVE,
 });

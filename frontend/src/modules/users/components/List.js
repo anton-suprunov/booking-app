@@ -29,7 +29,7 @@ class List extends Component {
   }
 
   render() {
-    const { users, deleteUser } = this.props;
+    const { users, deleteUser, location: { state: { userCreated = false } = {} } } = this.props;
     return (
       <div>
         <RaisedButton
@@ -57,6 +57,11 @@ class List extends Component {
           }
           </TableBody>
         </Table>
+
+        <Snack
+          open={userCreated}
+          message="New administrator succesfully added"
+        />
       </div>
     );
   }
@@ -65,6 +70,7 @@ List.propTypes = {
   fetch: PropTypes.func,
   deleteUser: PropTypes.func,
   users: PropTypes.array,
+  location: PropTypes.object,
 };
 
 export { List };

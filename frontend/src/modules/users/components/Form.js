@@ -9,13 +9,14 @@ import { Link } from 'react-router-dom';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import Checkbox from 'material-ui/Checkbox';
 
 import config from 'config';
 import * as validations from 'shared/validations';
 import Snack from 'components/Snack';
 import { 
   create,
-  resetUserCreated,
+  formLeave,
  } from '../actions';
 import TextInput from 'components/TextInput';
 import * as selectors from '../selectors';
@@ -29,8 +30,12 @@ class UserForm extends Component {
 
   render() {
     const { hasErrored, handleSubmit, onSubmit, userCreated } = this.props;
+
     if (userCreated) {
-      return <Redirect to="/users" />;
+      return <Redirect to={{
+        pathname: '/users',
+        state: { userCreated: true },
+      }} />;
     }
 
     return (
@@ -88,13 +93,7 @@ class UserForm extends Component {
               containerElement={ <Link to="/users" /> }
             />
           </div>
-
         </form>
-
-        <Snack 
-          open={userCreated}
-          message="New administrator succesfully added"
-        />
       </div>
     );
   }
@@ -117,7 +116,7 @@ const mapState = state => ({
 
 export default connect(mapState, {
   onSubmit: create,
-  onUnmount: resetUserCreated,
+  onUnmount: formLeave,
 })(
   reduxForm({
     form: 'users',
