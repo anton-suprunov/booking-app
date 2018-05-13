@@ -5,8 +5,11 @@ import { Link } from 'react-router-dom';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import DoneIcon from 'material-ui/svg-icons/action/done';
 import {
   Table,
+  TableHeader,
+  TableHeaderColumn,
   TableBody,
   TableRow,
   TableRowColumn,
@@ -29,7 +32,11 @@ class List extends Component {
   }
 
   render() {
-    const { users, deleteUser, location: { state: { userCreated = false } = {} } } = this.props;
+    const { 
+      users, 
+      deleteUser, 
+      location: { state: { userCreated = false } = {} }, 
+    } = this.props;
     return (
       <div>
         <RaisedButton
@@ -42,15 +49,36 @@ class List extends Component {
         <Table selectable={false} style={{
           maxWidth: '90%',
         }}>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableRow>
+              <TableHeaderColumn>Email</TableHeaderColumn>
+              <TableHeaderColumn>Super user</TableHeaderColumn>
+              <TableHeaderColumn style={{textIndent: '28px'}}>Actions</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
           <TableBody displayRowCheckbox={false}>
           { 
             users.length && users.map(user =>   
               <TableRow key={user._id} hoverable={true}>
                 <TableRowColumn>{user.username}</TableRowColumn>
-                <TableRowColumn></TableRowColumn>
-                <TableRowColumn>
-                  <FlatButton label="Edit" primary={true} />
-                  <FlatButton label="Delete" secondary={true} onClick={ () => deleteUser(user._id) } />
+                <TableRowColumn>{user.superuser ? <DoneIcon /> : ''}</TableRowColumn>
+                <TableRowColumn >
+                  <FlatButton 
+                    label="Edit" 
+                    primary={true} 
+                    containerElement={ 
+                      <Link 
+                        to={`/users/edit/${user._id}`} 
+                        className={styles.editBtn} 
+                      />
+                    }
+                  />
+                  <FlatButton 
+                    className={styles.deleteBtn}
+                    label="Delete" 
+                    secondary={true}
+                    onClick={ () => deleteUser(user._id) } 
+                  />
                 </TableRowColumn>
               </TableRow> 
             )

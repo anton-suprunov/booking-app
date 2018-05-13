@@ -19,7 +19,16 @@ module.exports = {
             },
           },
           { 
-            loader: 'postcss-loader'
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss', // <= this line
+              sourceMap: true,
+              plugins: function () {
+                return [
+                  require('autoprefixer'),
+                ]
+              },
+            },
           }
         ]
       },

@@ -1,6 +1,14 @@
 .add-btn {
   margin-top: 20px;
-  //float: right
+  /*float: right*/
+}
+
+.edit-btn {
+  composes: link-btn-wrap from '../../shared/buttons.css';
+}
+
+.delete-btn {
+  
 }
 
 .title {
@@ -18,4 +26,22 @@
   position: relative;
   top: 13px;
   display: inline-block;
+}
+
+.change-password {
+  font-size: 12px;
+  color:#444;
+  border-bottom: 1px dashed #444;
+  text-decoration: none;
+  display: inline-block;
+  margin: 15px 0 10px;
+}
+
+.passwords-wrap {
+  height: 0;
+  overflow: hidden;
+  transition: height ease 0.2s;
+}
+.passwords-wrap.passwords-wrap-active {
+  height: auto;
 }

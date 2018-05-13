@@ -21,7 +21,11 @@ const byId = (state = {}, action) => {
   }
   case FETCH_SUCCESS: {
     return action.users.reduce((users, user) => {
-      users[user._id] = user;
+      let newUser = { 
+        email: user.username, 
+        ...user, 
+      };
+      users[user._id] = newUser;
       return users;
     }, {});
   }

@@ -2,6 +2,7 @@
 import { 
   fetchUsers, 
   createUser, 
+  editUser,
   deleteUser as deleteUserRequest, 
 } from 'api/users';
 import * as consts  from './consts';
@@ -9,6 +10,10 @@ import * as consts  from './consts';
 export const CREATE_REQUEST = `${consts.NAME}_CREATE_REQUEST`;
 export const CREATE_SUCCESS = `${consts.NAME}_CREATE_SUCCESS`;
 export const CREATE_ERROR = `${consts.NAME}_CREATE_ERROR`;
+
+export const EDIT_REQUEST = `${consts.NAME}_CREATE_REQUEST`;
+export const EDIT_SUCCESS = `${consts.NAME}_CREATE_SUCCESS`;
+export const EDIT_ERROR = `${consts.NAME}_CREATE_ERROR`;
 
 export const FETCH_REQUEST = `${consts.NAME}_FETCH_REQUEST`;
 export const FETCH_SUCCESS = `${consts.NAME}_FETCH_SUCCESS`;
@@ -38,6 +43,26 @@ export const create = (formValues) => dispatch => {
   createUser(formValues)
     .then(res => dispatch(createSuccess(res)))
     .catch(err => dispatch(createError(err)));
+};
+
+const editSuccess = (res) => ({
+  type: EDIT_SUCCESS,
+  res,
+});
+
+const editError = (err) => ({
+  type: EDIT_ERROR,
+  err,
+});
+
+export const edit = (formValues) => dispatch => {
+  dispatch({
+    type: EDIT_REQUEST,
+  });
+
+  editUser(formValues)
+    .then(res => dispatch(editSuccess(res)))
+    .catch(err => dispatch(editError(err)));
 };
 
 const fetchSuccess = (res) => ({

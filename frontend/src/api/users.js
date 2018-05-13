@@ -19,3 +19,8 @@ export const deleteUser = (id) => {
   })
     .then(res => res.data);
 };
+
+export const editUser = (values) => {
+  return axios.put(config.API.users + values._id + '/edit', values)
+    .then(res => res.data);
+};

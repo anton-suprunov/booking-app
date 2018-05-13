@@ -6,3 +6,5 @@ export const getUsers = state => {
 };
 
 export const userCreated = state => state[NAME].userCreated;
+
+export const getUser = (state, userId) => userId ? state[NAME].byId[userId] : undefined;

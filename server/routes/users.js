@@ -7,6 +7,7 @@ router.post('/', function(req, res, next) {
   var user = new UserModel({
     username: req.body.email,
     password: req.body.password,
+    superuser: req.body.superuser
   });
 
   user.save(function (err) {
@@ -20,15 +21,18 @@ router.post('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  return UserModel.find(function (err, users) {
+  return UserModel.find({}, '-password', function (err, users) {
     if (!err) {
-      return res.json({
-        users
-      });
+      return res.json({ users });
     } else {
       return console.log(err);
     }
   });
+});
+
+router.put('/:id/edit', function(req, res) {
+  var id = req.params.id;
+  //UserModel.findById(id, )
 });
 
 router.delete('/', function (req, res, next) {
