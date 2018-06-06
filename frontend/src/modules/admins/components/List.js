@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import DoneIcon from 'material-ui/svg-icons/action/done';
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import {
   Table,
   TableHeader,
@@ -16,11 +17,11 @@ import {
 } from 'material-ui/Table';
 
 import config from 'config';
-import Snack from 'components/Snack';
-import TextInput from 'components/TextInput';
+import Snack from 'shared/components/Snack';
+import TextInput from 'shared/components/TextInput';
 import { 
   fetch,
-  deleteUser,
+  deleteAdmin,
 } from '../actions';
 import * as selectors from '../selectors';
 
@@ -33,9 +34,9 @@ class List extends Component {
 
   render() {
     const { 
-      users, 
-      deleteUser, 
-      location: { state: { userCreated = false } = {} }, 
+      admins, 
+      deleteAdmin, 
+      location: { state: { adminCreated = false } = {} }, 
     } = this.props;
     return (
       <div>
@@ -43,7 +44,7 @@ class List extends Component {
           label="Добавить администратора" 
           primary={true} 
           className={styles.addBtn} 
-          containerElement={<Link to="/users/create" />}
+          containerElement={<Link to="/admins/create" />}
         />
 
         <Table selectable={false} style={{
@@ -52,23 +53,23 @@ class List extends Component {
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
               <TableHeaderColumn>Email</TableHeaderColumn>
-              <TableHeaderColumn>Super user</TableHeaderColumn>
+              <TableHeaderColumn>Super Administrator</TableHeaderColumn>
               <TableHeaderColumn style={{textIndent: '28px'}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
           { 
-            users.length && users.map(user =>   
-              <TableRow key={user._id} hoverable={true}>
-                <TableRowColumn>{user.username}</TableRowColumn>
-                <TableRowColumn>{user.superuser ? <DoneIcon /> : ''}</TableRowColumn>
+            admins.length && admins.map(admin =>   
+              <TableRow key={admin._id} hoverable={true}>
+                <TableRowColumn>{admin.email}</TableRowColumn>
+                <TableRowColumn>{admin.superuser ? <DoneIcon /> : <CloseIcon />}</TableRowColumn>
                 <TableRowColumn >
                   <FlatButton 
                     label="Edit" 
                     primary={true} 
                     containerElement={ 
                       <Link 
-                        to={`/users/edit/${user._id}`} 
+                        to={`/admins/edit/${admin._id}`} 
                         className={styles.editBtn} 
                       />
                     }
@@ -77,7 +78,7 @@ class List extends Component {
                     className={styles.deleteBtn}
                     label="Delete" 
                     secondary={true}
-                    onClick={ () => deleteUser(user._id) } 
+                    onClick={ () => deleteAdmin(admin._id) } 
                   />
                 </TableRowColumn>
               </TableRow> 
@@ -87,7 +88,7 @@ class List extends Component {
         </Table>
 
         <Snack
-          open={userCreated}
+          open={adminCreated}
           message="New administrator succesfully added"
         />
       </div>
@@ -96,18 +97,18 @@ class List extends Component {
 }
 List.propTypes = {
   fetch: PropTypes.func,
-  deleteUser: PropTypes.func,
-  users: PropTypes.array,
+  deleteAdmin: PropTypes.func,
+  admins: PropTypes.array,
   location: PropTypes.object,
 };
 
 export { List };
 
 const mapState = state => ({
-  users: selectors.getUsers(state),
+  admins: selectors.getAdmins(state),
 });
 
 export default connect(mapState, {
   fetch,
-  deleteUser,
+  deleteAdmin,
 })(List);

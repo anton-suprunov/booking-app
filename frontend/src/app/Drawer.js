@@ -35,7 +35,7 @@ export default function AppDrawer(props) {
       <Divider />
       <MenuItem 
         leftIcon={<Lock />} 
-        containerElement={<Link to={'/users'} />}
+        containerElement={<Link to={'/admins'} />}
         primaryText="Администраторы"
       />
       <MenuItem leftIcon={<Logout />}>Выйти из аккаунта</MenuItem>

@@ -1,19 +1,19 @@
 //import { AuthLogin } from 'api/auth';
 import { 
-  fetchUsers, 
-  createUser, 
-  editUser,
-  deleteUser as deleteUserRequest, 
-} from 'api/users';
+  fetchAdmins, 
+  createAdmin,
+  editAdmin,
+  deleteAdmin as deleteAdminRequest, 
+} from 'api/admins';
 import * as consts  from './consts';
 
 export const CREATE_REQUEST = `${consts.NAME}_CREATE_REQUEST`;
 export const CREATE_SUCCESS = `${consts.NAME}_CREATE_SUCCESS`;
 export const CREATE_ERROR = `${consts.NAME}_CREATE_ERROR`;
 
-export const EDIT_REQUEST = `${consts.NAME}_CREATE_REQUEST`;
-export const EDIT_SUCCESS = `${consts.NAME}_CREATE_SUCCESS`;
-export const EDIT_ERROR = `${consts.NAME}_CREATE_ERROR`;
+export const EDIT_REQUEST = `${consts.NAME}_EDIT_REQUEST`;
+export const EDIT_SUCCESS = `${consts.NAME}_EDIT_SUCCESS`;
+export const EDIT_ERROR = `${consts.NAME}_EDIT_ERROR`;
 
 export const FETCH_REQUEST = `${consts.NAME}_FETCH_REQUEST`;
 export const FETCH_SUCCESS = `${consts.NAME}_FETCH_SUCCESS`;
@@ -40,7 +40,7 @@ export const create = (formValues) => dispatch => {
     type: CREATE_REQUEST,
   });
 
-  createUser(formValues)
+  return createAdmin(formValues)
     .then(res => dispatch(createSuccess(res)))
     .catch(err => dispatch(createError(err)));
 };
@@ -60,14 +60,14 @@ export const edit = (formValues) => dispatch => {
     type: EDIT_REQUEST,
   });
 
-  editUser(formValues)
+  return editAdmin(formValues)
     .then(res => dispatch(editSuccess(res)))
     .catch(err => dispatch(editError(err)));
 };
 
-const fetchSuccess = (res) => ({
+const fetchSuccess = (admins) => ({
   type: FETCH_SUCCESS,
-  users: res.users,
+  admins,
 });
 
 const fetchError = (err) => ({
@@ -80,14 +80,14 @@ export const fetch = () => dispatch => {
     type: FETCH_REQUEST,
   });
 
-  fetchUsers()
+  fetchAdmins()
     .then(res => dispatch(fetchSuccess(res)))
     .catch(err => dispatch(fetchError(err)));
 };
 
-const deleteSuccess = (res) => ({
+const deleteSuccess = (id) => ({
   type: DELETE_SUCCESS,
-  id: res.id,
+  id,
 });
 
 const deleteError = (err) => ({
@@ -95,13 +95,13 @@ const deleteError = (err) => ({
   err,
 });
 
-export const deleteUser = (id) => dispatch => {
+export const deleteAdmin = (id) => dispatch => {
   dispatch({
     type: DELETE_REQUEST,
   });
 
-  deleteUserRequest(id)
-    .then(res => dispatch(deleteSuccess(res)))
+  deleteAdminRequest(id)
+    .then(res => dispatch(deleteSuccess(id)))
     .catch(err => dispatch(deleteError(err)));
 };
 

@@ -7,7 +7,7 @@ import { Field, reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { login } from '../actions';
-import TextInput from '../../../components/TextInput';
+import TextInput from 'shared/components/TextInput';
 
 import styles from '../auth.css';
 

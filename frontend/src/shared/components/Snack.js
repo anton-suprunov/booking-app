@@ -34,9 +34,13 @@ class Snack extends Component {
   }
 
   render() {
-    const { message } = this.props;
-    const { open } = this.state;
-
+    const { 
+      message = '',
+    } = this.props;
+    const { 
+      open = false, 
+    } = this.state;
+    console.log(open);
     return (
       <Snackbar
         open={open}

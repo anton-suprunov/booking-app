@@ -17,22 +17,23 @@ import {
 
 import config from 'config';
 import * as validations from 'shared/validations';
-import Snack from 'components/Snack';
-import { 
+import Snack from 'shared/components/Snack';
+import {
   create,
   edit,
   formLeave,
  } from '../actions';
-import TextInput from 'components/TextInput';
+import TextInput from 'shared/components/TextInput';
 import * as selectors from '../selectors';
 
 import styles from '../styles.css';
 
-class UserForm extends Component {
+class AdminForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       passwordsShown: !props.initialValues,
+      adminCreateError: false,
     };
   }
   componentWillUnmount() {
@@ -67,31 +68,31 @@ class UserForm extends Component {
     if (this.props.initialValues && this.props.initialValues._id.length) {
       return this.props.edit(values);
     }
-    return this.props.create(values);
+    return this.props.create(values)
+      .then(() => { console.log('admin created'); })
+      .catch(() => { console.log('admin creation error'); });
   }
 
   render() {
     const { 
       hasErrored, 
       handleSubmit, 
-      //onSubmit, 
       create,
       edit,
-      userCreated, 
       initialValues,
     } = this.props;
 
     const editingMode = initialValues && initialValues._id.length > 0;
 
-    if (userCreated) {
+    /*if (adminCreated) {
       return <Redirect to={{
-        pathname: '/users',
-        state: { userCreated: true },
+        pathname: '/admins',
+        state: { adminCreated: true },
       }} />;
-    }
+    }*/
 
     return (
-      <div>
+      <React.Fragment>
         <form onSubmit={handleSubmit(this.submitForm)}>
           <h1 className={styles.title}>{editingMode ? 'Редактировать администратора' : 'Добавить администратора'}</h1>
           <label className={styles.label} htmlFor="email">
@@ -152,13 +153,14 @@ class UserForm extends Component {
               id="superuser"
               label="Super administrator"
               component={Checkbox}
+              defaultValue={false}
             />
             
           </label>
 
           <RaisedButton 
             type="submit"
-            label={ editingMode ? 'Edit User' : 'Add User' }
+            label={ editingMode ? 'Edit Administrator' : 'Add Administrator' }
             primary={true}
             className={styles.submit} 
           />
@@ -167,32 +169,35 @@ class UserForm extends Component {
             <FlatButton 
               label="Cancel" 
               secondary={true}
-              containerElement={ <Link to="/users" /> }
+              containerElement={ <Link to="/admins" /> }
             />
           </div>
         </form>
-      </div>
+        
+        <Snack
+          open={this.state.adminCreateError}
+          message="Failed to create new Administrator"
+        />
+
+      </React.Fragment>
     );
   }
 }
 
-UserForm.propTypes = {
+AdminForm.propTypes = {
   hasErrored: PropTypes.bool,
   dispatch: PropTypes.func,
   handleSubmit: PropTypes.func,
-  onSubmit: PropTypes.func,
   onUnmount: PropTypes.func,
-  userCreated: PropTypes.bool,
   initialValues: PropTypes.object,
   create: PropTypes.func,
   edit: PropTypes.func,
 };
 
-export { UserForm };
+export { AdminForm };
 
 const mapState = (state, ownProps) => ({
-  userCreated: selectors.userCreated(state),
-  initialValues: selectors.getUser(state, ownProps.match.params.userId), 
+  initialValues: selectors.getAdmin(state, ownProps.match.params.adminId), 
 });
 
 export default connect(mapState, {
@@ -201,6 +206,6 @@ export default connect(mapState, {
   onUnmount: formLeave,
 })(
   reduxForm({
-    form: 'userForm',
-  })(UserForm)
+    form: 'adminForm',
+  })(AdminForm)
 );

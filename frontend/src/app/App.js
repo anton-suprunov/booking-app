@@ -7,6 +7,8 @@ import AppBar from 'material-ui/AppBar';
 import withWidth, {LARGE} from 'material-ui/utils/withWidth';
 
 import Drawer from './Drawer';
+import GlobalMessage from 'shared/components/GlobalMessage';
+
 import styles from './app.css';
 
 class App extends Component {
@@ -36,7 +38,7 @@ class App extends Component {
     const { children, location } = this.props;
     
     let title = '';
-    if (location.pathname.indexOf('/users') === 0) {
+    if (location.pathname.indexOf('/admins') === 0) {
       title = 'Администраторы';
     }
     
@@ -58,6 +60,8 @@ class App extends Component {
           [styles.contentExpanded]: this.state.drawerOpen,
         })}>
           {children}
+
+          <GlobalMessage />
         </div>
       </div>
     );

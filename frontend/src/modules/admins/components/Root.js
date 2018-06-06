@@ -7,7 +7,7 @@ import Form from './Form';
 const Root = ({ match }) => (
   <Switch>
     <Route path={`${match.url}/create`} component={Form} />
-    <Route path={`${match.url}/edit/:userId`} component={Form} />
+    <Route path={`${match.url}/edit/:adminId`} component={Form} />
     <Route path={`${match.url}`} component={List} />
   </Switch>
 );

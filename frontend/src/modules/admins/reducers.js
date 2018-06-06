@@ -4,9 +4,15 @@ import {
   CREATE_REQUEST, 
   CREATE_SUCCESS, 
   CREATE_ERROR,
+
+  EDIT_REQUEST,
+  EDIT_SUCCESS,
+  EDIT_ERROR,
+
   FETCH_REQUEST,
   FETCH_SUCCESS,
   FETCH_ERROR,
+  
   DELETE_SUCCESS,
   FORM_LEAVE,
 } from './actions';
@@ -20,13 +26,13 @@ const byId = (state = {}, action) => {
     };
   }
   case FETCH_SUCCESS: {
-    return action.users.reduce((users, user) => {
-      let newUser = { 
-        email: user.username, 
-        ...user, 
+    return action.admins.reduce((admins, admin) => {
+      let newAdmin = { 
+        email: admin.username, 
+        ...admin, 
       };
-      users[user._id] = newUser;
-      return users;
+      admins[admin._id] = newAdmin;
+      return admins;
     }, {});
   }
   case DELETE_SUCCESS: {
@@ -48,10 +54,10 @@ const allIds = (state = [], action) => {
     ];
   }
   case FETCH_SUCCESS: {
-    return action.users.map(user => user._id);
+    return action.admins.map(admin => admin._id);
   }
   case DELETE_SUCCESS: {
-    let newState = state.filter(userId => userId !== action.id);
+    let newState = state.filter(adminId => adminId !== action.id);
     return newState;
   }
   default: 
@@ -59,21 +65,7 @@ const allIds = (state = [], action) => {
   }
 };
 
-const userCreated = (state = false, action) => {
-  switch (action.type) {
-  case CREATE_SUCCESS: 
-    return true;
-  case CREATE_REQUEST:
-  case CREATE_ERROR:
-  case FORM_LEAVE:
-    return false; 
-  default:
-    return state;
-  }
-};
-
 export default combineReducers({
   byId,
   allIds,
-  userCreated,
 });

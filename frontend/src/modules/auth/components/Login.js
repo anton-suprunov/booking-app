@@ -6,9 +6,9 @@ import isEmail from 'validator/lib/isEmail';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
-import Snack from '../../../components/Snack';
+import Snack from 'shared/components/Snack';
 import { login } from '../actions';
-import TextInput from '../../../components/TextInput';
+import TextInput from 'shared/components/TextInput';
 import { isAuthentificated, hasErrored } from '../selectors';
 
 import styles from '../auth.css';
