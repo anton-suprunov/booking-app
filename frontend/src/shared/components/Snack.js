@@ -40,7 +40,7 @@ class Snack extends Component {
     const { 
       open = false, 
     } = this.state;
-    console.log(open);
+    
     return (
       <Snackbar
         open={open}
@@ -48,6 +48,7 @@ class Snack extends Component {
         autoHideDuration={3000}
         style={{
           top: 0,
+          textAlign: 'center',
           bottom: 'auto',
           left: (window.innerWidth - 288) / 2,
           transform: open ?

@@ -5,17 +5,13 @@ import {
 import Admins from 'modules/admins';
 
 export const globalMessage = (state = null, action) => {
-  switch(action.type) {
-  case Admins.actions.CREATE_ERROR: {
-    console.log(action);
-    return action.err.response.data.message;
+  if (action.type === ERROR_MESSAGE_RESET) {
+    return null;
   }
 
-  case ERROR_MESSAGE_RESET: {
-    return state;
+  if (action.message) {
+    return action.message;
   }
 
-  default: 
-    return state;
-  }
+  return state;
 };

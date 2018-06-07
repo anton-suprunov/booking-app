@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux'; 
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { Field, reduxForm } from 'redux-form';
+import { withRouter } from 'react-router-dom';
+import { 
+  Field, 
+  reduxForm, 
+} from 'redux-form';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
@@ -31,9 +34,9 @@ import styles from '../styles.css';
 class AdminForm extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       passwordsShown: !props.initialValues,
-      adminCreateError: false,
     };
   }
   componentWillUnmount() {
@@ -66,11 +69,11 @@ class AdminForm extends Component {
 
   submitForm = (values) => {
     if (this.props.initialValues && this.props.initialValues._id.length) {
-      return this.props.edit(values);
+      return this.props.edit(values)
+        .then(() => this.props.history.push('/admins'));
     }
     return this.props.create(values)
-      .then(() => { console.log('admin created'); })
-      .catch(() => { console.log('admin creation error'); });
+      .then(() => this.props.history.push('/admins'));
   }
 
   render() {
@@ -83,13 +86,6 @@ class AdminForm extends Component {
     } = this.props;
 
     const editingMode = initialValues && initialValues._id.length > 0;
-
-    /*if (adminCreated) {
-      return <Redirect to={{
-        pathname: '/admins',
-        state: { adminCreated: true },
-      }} />;
-    }*/
 
     return (
       <React.Fragment>
@@ -174,11 +170,6 @@ class AdminForm extends Component {
           </div>
         </form>
         
-        <Snack
-          open={this.state.adminCreateError}
-          message="Failed to create new Administrator"
-        />
-
       </React.Fragment>
     );
   }
@@ -192,6 +183,7 @@ AdminForm.propTypes = {
   initialValues: PropTypes.object,
   create: PropTypes.func,
   edit: PropTypes.func,
+  history: PropTypes.object,
 };
 
 export { AdminForm };
@@ -207,5 +199,7 @@ export default connect(mapState, {
 })(
   reduxForm({
     form: 'adminForm',
-  })(AdminForm)
+  })(
+    withRouter(AdminForm)
+  )
 );

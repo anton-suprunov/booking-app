@@ -7,19 +7,30 @@ import {
   resetGlobalMessage,
 } from '../actions';
 
-const GlobalMessage = ({ 
-  message = null, 
-  resetGlobalMessage,
-}) => {
-  return (
-    <React.Fragment>
-      <Snack
-        open={message && message.length > 0}
-        message={message}
-      />
-    </React.Fragment>
-  );
-};
+class GlobalMessage extends Component {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.message && this.props.message.length > 0) { 
+      setTimeout(() => {
+        this.props.resetGlobalMessage();
+      }, 1000);
+    }
+  }
+
+  render() {
+    const {
+      message = '',
+    } = this.props;
+    
+    return (
+      <React.Fragment>
+        <Snack
+          open={message !== null && message.length > 0}
+          message={message || ''}
+        />
+      </React.Fragment>
+    );
+  }
+}
 GlobalMessage.propTypes = {
   message: PropTypes.string,
   resetGlobalMessage: PropTypes.func,
@@ -30,7 +41,6 @@ export {
 };
 
 export default connect(state => ({
-  //initialValues: selectors.getAdmin(state, ownProps.match.params.adminId),
   message: state.global.globalMessage,
 }), {
   resetGlobalMessage,

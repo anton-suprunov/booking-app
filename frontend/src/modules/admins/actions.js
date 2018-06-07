@@ -28,49 +28,51 @@ export const FORM_LEAVE = `${consts.NAME}_FORM_LEAVE`;
 const createSuccess = (res) => ({
   type: CREATE_SUCCESS,
   res,
+  message: 'Administrator created successfully',
 });
 
 const createError = (err) => ({
   type: CREATE_ERROR,
-  err,
+  message: err,
 });
 
-export const create = (formValues) => dispatch => {
+export const create = formValues => dispatch => {
   dispatch({
     type: CREATE_REQUEST,
   });
 
   return createAdmin(formValues)
     .then(res => dispatch(createSuccess(res)))
-    .catch(err => dispatch(createError(err)));
+    .catch(res => dispatch(createError(res.response.data.message)));
 };
 
-const editSuccess = (res) => ({
+const editSuccess = res => ({
   type: EDIT_SUCCESS,
   res,
+  message: 'Administrator updated successfully',
 });
 
-const editError = (err) => ({
+const editError = err => ({
   type: EDIT_ERROR,
-  err,
+  message: err,
 });
 
-export const edit = (formValues) => dispatch => {
+export const edit = formValues => dispatch => {
   dispatch({
     type: EDIT_REQUEST,
   });
 
   return editAdmin(formValues)
     .then(res => dispatch(editSuccess(res)))
-    .catch(err => dispatch(editError(err)));
+    .catch(res => dispatch(editError(res.response.data.message)));
 };
 
-const fetchSuccess = (admins) => ({
+const fetchSuccess = admins => ({
   type: FETCH_SUCCESS,
   admins,
 });
 
-const fetchError = (err) => ({
+const fetchError = err => ({
   type: FETCH_ERROR,
   err,
 });
@@ -85,17 +87,18 @@ export const fetch = () => dispatch => {
     .catch(err => dispatch(fetchError(err)));
 };
 
-const deleteSuccess = (id) => ({
+const deleteSuccess = id => ({
   type: DELETE_SUCCESS,
   id,
+  message: 'Administrator deleted successfully',
 });
 
-const deleteError = (err) => ({
+const deleteError = err => ({
   type: DELETE_ERROR,
   err,
 });
 
-export const deleteAdmin = (id) => dispatch => {
+export const deleteAdmin = id => dispatch => {
   dispatch({
     type: DELETE_REQUEST,
   });

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { 
+  Link,
+} from 'react-router-dom';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -17,7 +19,6 @@ import {
 } from 'material-ui/Table';
 
 import config from 'config';
-import Snack from 'shared/components/Snack';
 import TextInput from 'shared/components/TextInput';
 import { 
   fetch,
@@ -36,10 +37,10 @@ class List extends Component {
     const { 
       admins, 
       deleteAdmin, 
-      location: { state: { adminCreated = false } = {} }, 
     } = this.props;
+
     return (
-      <div>
+      <React.Fragment>
         <RaisedButton
           label="Добавить администратора" 
           primary={true} 
@@ -87,11 +88,7 @@ class List extends Component {
           </TableBody>
         </Table>
 
-        <Snack
-          open={adminCreated}
-          message="New administrator succesfully added"
-        />
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -111,4 +108,6 @@ const mapState = state => ({
 export default connect(mapState, {
   fetch,
   deleteAdmin,
-})(List);
+})(
+  List
+);
