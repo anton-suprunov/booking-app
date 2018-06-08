@@ -19,7 +19,6 @@ import {
 } from 'material-ui/Table';
 
 import config from 'config';
-import TextInput from 'shared/components/TextInput';
 import { 
   fetch,
   deleteAdmin,

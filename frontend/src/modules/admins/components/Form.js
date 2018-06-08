@@ -26,7 +26,6 @@ import {
   edit,
   formLeave,
  } from '../actions';
-import TextInput from 'shared/components/TextInput';
 import * as selectors from '../selectors';
 
 import styles from '../styles.css';

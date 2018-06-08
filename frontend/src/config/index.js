@@ -2,7 +2,7 @@ const apiBase = 'http://localhost:3030';
 
 export default {
   API: {
-    login: `${apiBase}/login/`,
+    login: `${apiBase}/authentication/`,
     admins: `${apiBase}/admins/`,
   },
 };

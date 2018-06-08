@@ -7,8 +7,16 @@ export const fetchAdmins = () => {
     .then(res => res.data.data);
 };
 
-export const createAdmin = (values) => {
-  return axios.post(config.API.admins, values)
+export const createAdmin = ({ 
+  email, 
+  password, 
+  superuser, 
+}) => {
+  return axios.post(config.API.admins, {
+    email,
+    password,
+    superuser,
+  })
     .then(res => res.data);
 };
 

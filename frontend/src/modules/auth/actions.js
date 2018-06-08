@@ -14,12 +14,13 @@ const loginError = (res) => ({
   res,
 });
 
-export const login = (email, password) => dispatch => {
+export const login = values => dispatch => {
+  console.log('>>>');
   dispatch({
     type: LOGIN_REQUEST,
   });
 
-  return AuthLogin({ email, password })
+  return AuthLogin(values)
     .then(res => dispatch(loginSuccess(res)))
     .catch(error => dispatch(loginError(error)));
 };

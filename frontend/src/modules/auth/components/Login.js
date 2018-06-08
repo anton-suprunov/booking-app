@@ -3,109 +3,79 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import isEmail from 'validator/lib/isEmail';
-
 import RaisedButton from 'material-ui/RaisedButton';
+import {
+  TextField,
+} from 'redux-form-material-ui';
+import {
+  Field,
+  reduxForm,
+} from 'redux-form';
+import * as validations from 'shared/validations';
 
 import Snack from 'shared/components/Snack';
 import { login } from '../actions';
-import TextInput from 'shared/components/TextInput';
 import { isAuthentificated, hasErrored } from '../selectors';
 
 import styles from '../auth.css';
 
-class Login extends Component {
+class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: '',
-      password: '',
-      errors : {},
-    };
+    
+    this.state = {};
   }
 
-  handleInputChange = (e) => {
-    this.setState({
-      [e.target.name] : e.target.value,
-    });
-  }
-
-  handleInputFocus = (e) => {
-    this.setState({
-      errors: {
-        ...this.state.errors,
-        [e.target.name] : '',
-      },
-    });
-  }
-
-  validate = () => {
-    let res =  {
-      email: '',
-      password: '',
-    };
-
-    if (this.state.email.length === 0) {
-      res.email = 'Please enter your email';
-    } else if (!isEmail(this.state.email)) {
-      res.email = 'Please enter valid email';
-    }
-    if (this.state.password.length === 0) {
-      res.password = 'Please enter your password';
-    }
-
-    return res;
-  }
-
-  handleSubmit = (e) => {
-    let errors;
-    const { login } = this.props;
-
-    e.preventDefault();
-
-    errors = this.validate();
-    this.setState({ errors });
-    if (errors.email.length > 0 || errors.password.length > 0) {
-      return;
-    }
-
-    login(this.state.email, this.state.password);
+  submitForm = (values) => {
+    return this.props.login(values)
+      .then(console.log);
   }
 
   render() {
-    const { isAuthentificated, hasErrored } = this.props;
+    const { 
+      isAuthentificated, 
+      hasErrored,
+      handleSubmit,
+    } = this.props;
 
     if (isAuthentificated) {
       return <Redirect to="" />;
     }
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit} className={styles.container}>
+      <React.Fragment>
+        <form onSubmit={handleSubmit(this.submitForm)} className={styles.container}>
           <h1 className={styles.title}>Welcome</h1>
+
           <label className={styles.label} htmlFor="email">
-            <TextInput 
+            <Field
               name="email"
+              type="text"
               hintText="Your email"
               fullWidth={true}
-              value={this.state.email}
-              onChange={this.handleInputChange}
-              onFocus={this.handleInputFocus}
-              errorText={this.state.errors.email || ''}
-            />
+              component={TextField} 
+              validate={[ 
+                validations.required, 
+                validations.isEmail, 
+              ]}
+            />          
           </label>
 
           <label className={styles.label} htmlFor="password">
-            <TextInput
-              name="password"
-              type="password"
-              hintText="Your password"
-              fullWidth={true}
-              value={this.state.password}
-              onChange={this.handleInputChange}
-              onFocus={this.handleInputFocus}
-              errorText={this.state.errors.password || ''}
-            />
-          </label>
+              <Field
+                name="password"
+                type="password"
+                hintText="Your password"
+                fullWidth={true}
+                component={TextField}
+                //errorText={this.state.errors.password || ''}
+                validate={[
+                  validations.required,
+                  //validations.minLength5,
+                ]}
+              />
+            </label>
+
           <RaisedButton 
             type="submit"
             label="Login" 
@@ -113,25 +83,35 @@ class Login extends Component {
             className={styles.submit} 
           />
         </form>
+
         <Snack 
           open={hasErrored}
           message="Login details are incorrect"
         />
-      </div>
+      </React.Fragment>
     );
   }
 }
-Login.propTypes = {
+LoginForm.propTypes = {
   login: PropTypes.func,
   isAuthentificated: PropTypes.bool,
   hasErrored: PropTypes.bool,
+  handleSubmit: PropTypes.func,
 };
 
-export { Login };
+export { LoginForm };
 
 const mapState = state => ({
   isAuthentificated: isAuthentificated(state),
   hasErrored: hasErrored(state),
 });
 
-export default connect(mapState, { login })(Login);
+export default connect(mapState, { 
+  login,
+})(
+  reduxForm({
+    form: 'loginForm',
+  })(
+    LoginForm
+  )
+);

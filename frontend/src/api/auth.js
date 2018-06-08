@@ -1,11 +1,11 @@
 import axios from 'axios';
 import config from '../config';
 
-export const AuthLogin = (data) => {
+export const AuthLogin = ({ email, password }) => {
   return axios.post(config.API.login, {
-    username: data.email,
-    password: data.password,
-  }, {
-    //withCredentials: true,
-  }).then(res => res.data.status);
+    'email': email,
+    'password': password,
+    'strategy': 'local',
+  })
+    .then(res => res.data);
 };
