@@ -11,11 +11,10 @@ const loginSuccess = (res) => ({
 
 const loginError = (res) => ({
   type: LOGIN_ERROR,
-  res,
+  message: 'Login details are incorrect',
 });
 
 export const login = values => dispatch => {
-  console.log('>>>');
   dispatch({
     type: LOGIN_REQUEST,
   });

@@ -13,7 +13,7 @@ import App from 'app/App';
 import Auth from 'modules/auth/';
 import Admins from 'modules/admins/';
 import Schedule from 'modules/schedule/';
-
+import GlobalMessage from 'shared/components/GlobalMessage';
 
 const store = configureStore();
 
@@ -25,18 +25,21 @@ class Root extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
-          <Switch>
-            <Route path={'/' + Auth.consts.NAME} component={Auth.components.Root} />
-            <App>
-              <Switch>
-                <Route path={'/' + Admins.consts.NAME} component={Admins.components.Root} />
-                <Route path='/' component={Schedule.components.Schedule} />
-                {/*<PrivateRoute path="/" component={Schedule.components.Schedule} />*/}
-              </Switch>
-            </App>
-          </Switch>
-        </Router>
+        <React.Fragment>
+          <Router>
+            <Switch>
+              <Route path={'/' + Auth.consts.NAME} component={Auth.components.Root} />
+              <App>
+                <Switch>
+                  <Route path={'/' + Admins.consts.NAME} component={Admins.components.Root} />
+                  <Route path='/' component={Schedule.components.Schedule} />
+                  {/*<PrivateRoute path="/" component={Schedule.components.Schedule} />*/}
+                </Switch>
+              </App>
+            </Switch>
+          </Router>
+         <GlobalMessage />
+        </React.Fragment>
       </Provider>
     );
   }

@@ -40,7 +40,7 @@ class Snack extends Component {
     const { 
       open = false, 
     } = this.state;
-    
+    console.log(open, message);
     return (
       <Snackbar
         open={open}

@@ -7,15 +7,15 @@ const {
 module.exports = {
   before: {
     all: [],
-    //find: [ authenticate('jwt') ],
-    find: [],
-    //get: [ authenticate('jwt') ],
-    get: [],
+    find: [ authenticate('jwt') ],
+    //find: [],
+    get: [ authenticate('jwt') ],
+    //get: [],
     create: [ hashPassword() ],
-    //update: [ hashPassword(),  authenticate('jwt') ],
-    update: [ hashPassword() ],
-    //patch: [ hashPassword(),  authenticate('jwt') ],
-    patch: [ hashPassword() ],
+    update: [ hashPassword(),  authenticate('jwt') ],
+    //update: [ hashPassword() ],
+    patch: [ hashPassword(),  authenticate('jwt') ],
+    //patch: [ hashPassword() ],
     //remove: [ authenticate('jwt') ]
     remove: [ ]
 
@@ -25,7 +25,7 @@ module.exports = {
     all: [ 
       // Make sure the password field is never sent to the client
       // Always must be the last hook
-      protect('password')
+      //protect('password')
     ],
     find: [],
     get: [],

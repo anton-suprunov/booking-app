@@ -15,7 +15,7 @@ import * as validations from 'shared/validations';
 
 import Snack from 'shared/components/Snack';
 import { login } from '../actions';
-import { isAuthentificated, hasErrored } from '../selectors';
+import { isAuthentificated } from '../selectors';
 
 import styles from '../auth.css';
 
@@ -27,17 +27,15 @@ class LoginForm extends Component {
   }
 
   submitForm = (values) => {
-    return this.props.login(values)
-      .then(console.log);
+    return this.props.login(values);
   }
 
   render() {
     const { 
       isAuthentificated, 
-      hasErrored,
       handleSubmit,
     } = this.props;
-
+    
     if (isAuthentificated) {
       return <Redirect to="" />;
     }
@@ -84,10 +82,6 @@ class LoginForm extends Component {
           />
         </form>
 
-        <Snack 
-          open={hasErrored}
-          message="Login details are incorrect"
-        />
       </React.Fragment>
     );
   }
@@ -95,7 +89,6 @@ class LoginForm extends Component {
 LoginForm.propTypes = {
   login: PropTypes.func,
   isAuthentificated: PropTypes.bool,
-  hasErrored: PropTypes.bool,
   handleSubmit: PropTypes.func,
 };
 
@@ -103,7 +96,6 @@ export { LoginForm };
 
 const mapState = state => ({
   isAuthentificated: isAuthentificated(state),
-  hasErrored: hasErrored(state),
 });
 
 export default connect(mapState, { 

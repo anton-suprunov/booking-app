@@ -1,6 +1,9 @@
 import axios from 'axios';
 import config from '../config';
 
+import app from './feathers-setup';
+//console.log(app);
+
 export const fetchAdmins = () => {
   return axios.get(config.API.admins)
     //.then(res => console.log(res.data.data))
