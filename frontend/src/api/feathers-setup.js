@@ -7,7 +7,7 @@ import config from '../config';
 
 const socket = io(config.API.base);
 const app = feathers();
-console.log('generate feathers app');
+
 // Setup the transport (Rest, Socket, etc.) here
 app.configure(socketio(socket));
 

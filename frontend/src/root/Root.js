@@ -31,9 +31,8 @@ class Root extends Component {
               <Route path={'/' + Auth.consts.NAME} component={Auth.components.Root} />
               <App>
                 <Switch>
-                  <Route path={'/' + Admins.consts.NAME} component={Admins.components.Root} />
-                  <Route path='/' component={Schedule.components.Schedule} />
-                  {/*<PrivateRoute path="/" component={Schedule.components.Schedule} />*/}
+                  <PrivateRoute path={'/' + Admins.consts.NAME} component={Admins.components.Root} />
+                  <PrivateRoute path='/' component={Schedule.components.Schedule} />
                 </Switch>
               </App>
             </Switch>

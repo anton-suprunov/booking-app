@@ -20,7 +20,7 @@ class GlobalMessage extends Component {
     const {
       message = '',
     } = this.props;
-    console.log(message);
+    
     return (
       <React.Fragment>
         <Snack

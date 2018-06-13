@@ -19,3 +19,7 @@ export const AuthLogin = ({ email, password }) => {
     password,
   });
 };
+
+export const AuthJWT = () => {
+  return app.authenticate();
+};

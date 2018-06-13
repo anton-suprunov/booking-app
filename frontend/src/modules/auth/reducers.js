@@ -12,8 +12,19 @@ const isAuthentificated = (state = false, action) => {
   }
 };
 
+const hasErrored = (state = false, action) => {
+  switch (action.type) {
+  case LOGIN_REQUEST: 
+    return false;
+  case LOGIN_ERROR: {
+    return true;
+  }
+  default:
+    return state;
+  }
+};
 
 export default combineReducers({
   isAuthentificated,
-  //hasErrored,
+  hasErrored,
 });

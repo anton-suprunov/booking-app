@@ -1,4 +1,7 @@
-import { AuthLogin } from '../../api/auth';
+import { 
+  AuthLogin,
+  AuthJWT,
+} from '../../api/auth';
 
 export const LOGIN_REQUEST = 'AUTH_LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
@@ -20,6 +23,12 @@ export const login = values => dispatch => {
   });
 
   return AuthLogin(values)
+    .then(res => dispatch(loginSuccess(res)))
+    .catch(error => dispatch(loginError(error)));
+};
+
+export const loginJWT = () => dispatch => {
+  return AuthJWT()
     .then(res => dispatch(loginSuccess(res)))
     .catch(error => dispatch(loginError(error)));
 };
