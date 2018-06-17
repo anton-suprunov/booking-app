@@ -3,31 +3,38 @@ import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-//import RaisedButton from 'material-ui/RaisedButton';
-//import classNames from 'classnames';
-import AppBar from 'material-ui/AppBar';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
+import Drawer from '@material-ui/core/Drawer';
+import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
-import People from 'material-ui/svg-icons/social/people';
-import DateRange from 'material-ui/svg-icons/action/date-range';
-import Lock from 'material-ui/svg-icons/action/lock';
-import Accessebility from 'material-ui/svg-icons/action/accessibility';
-import Dashboard from 'material-ui/svg-icons/action/dashboard';
-import Logout from 'material-ui/svg-icons/action/exit-to-app';
-import Divider from 'material-ui/Divider';
+
+import People from '@material-ui/icons/People';
+import DateRange from '@material-ui/icons/DateRange';
+import Lock from '@material-ui/icons/Lock';
+import Accessebility from '@material-ui/icons/Accessibility';
+import Dashboard from '@material-ui/icons/Dashboard';
+import Logout from '@material-ui/icons/ExitToApp';
 
 export default function AppDrawer(props) {
   return (
     <Drawer open={props.open} docked={true}>
-      <AppBar
-        title='BookingApp'
-        //onTitleTouchTap={handleTouchTap}
-        showMenuIconButton={false}
-        //iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-      />
+      <AppBar>
+        <Toolbar>
+          <Typography variant="title" color="inherit" >
+            BookingApp
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
       <MenuItem leftIcon={<Dashboard />}>Главная страница</MenuItem>
       <MenuItem leftIcon={<DateRange />}>Расписание</MenuItem>
       <MenuItem leftIcon={<People />}>Преподаватели</MenuItem>

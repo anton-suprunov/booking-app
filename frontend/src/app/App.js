@@ -4,8 +4,16 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 
-import AppBar from 'material-ui/AppBar';
-import withWidth, {LARGE} from 'material-ui/utils/withWidth';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import MenuIcon from '@material-ui/icons/Menu';
+
+import withWidth, {
+  isWidthUp,
+} from '@material-ui/core/withWidth';
+
 
 import Drawer from './Drawer';
 
@@ -23,7 +31,7 @@ class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.width !== nextProps.width) {
       this.setState({
-        drawerOpen: nextProps.width === LARGE,
+        drawerOpen: isWidthUp('lg', this.props.width),
       });
     }
   }
@@ -49,17 +57,31 @@ class App extends Component {
             [styles.bar]: !this.state.drawerOpen, 
             [styles.barExpanded]: this.state.drawerOpen,
           })}
-          onLeftIconButtonTouchTap={this.handleDrawerToggle}
-          title={title}
-        />
-        
+        >
+          <Toolbar>
+            <IconButton 
+              
+              color="inherit" 
+              aria-label="Menu"
+              onClick={this.handleDrawerToggle}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            <Typography variant="title" color="inherit" >
+              {title}
+            </Typography>
+            {/*<Button color="inherit">Login</Button>*/}
+          </Toolbar>
+        </AppBar>
+      
         <Drawer open={this.state.drawerOpen} />
 
         <div className={classNames({
           [styles.content]: !this.state.drawerOpen, 
           [styles.contentExpanded]: this.state.drawerOpen,
         })}>
-          {children}
+          {/*children*/}
         </div>
       </div>
     );
