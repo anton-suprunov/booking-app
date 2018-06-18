@@ -1,14 +1,14 @@
 .bar {
-  transition: left 218ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 218ms cubic-bezier(0.4, 0, 0.2, 1);
   left: 0;
-  width: auto !important;
   right: 0 !important;
   position: fixed !important;
 }
 
 .bar-expanded {
   composes: bar;
-  left: 255px;
+  /*left: 255px !important;*/
+  transform: translateX(255px);
 }
 
 .content {
@@ -21,4 +21,16 @@
 .content-expanded {
   composes: content;
   padding-left: 275px;
+}
+
+.drawer {
+  width: 255px
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  min-height: 64px;
 }

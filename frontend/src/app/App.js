@@ -16,7 +16,6 @@ import withWidth, {
 
 
 import Drawer from './Drawer';
-
 import styles from './app.css';
 
 class App extends Component {
@@ -31,7 +30,7 @@ class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.width !== nextProps.width) {
       this.setState({
-        drawerOpen: isWidthUp('lg', this.props.width),
+        drawerOpen: isWidthUp('sm', nextProps.width),
       });
     }
   }
@@ -43,7 +42,10 @@ class App extends Component {
   }
 
   render() {
-    const { children, location } = this.props;
+    const { 
+      children, 
+      location, 
+    } = this.props;
     
     let title = '';
     if (location.pathname.indexOf('/admins') === 0) {
@@ -75,7 +77,10 @@ class App extends Component {
           </Toolbar>
         </AppBar>
       
-        <Drawer open={this.state.drawerOpen} />
+        <Drawer 
+          open={this.state.drawerOpen} 
+          onHandleClick={this.handleDrawerToggle}
+        />
 
         <div className={classNames({
           [styles.content]: !this.state.drawerOpen, 
@@ -89,7 +94,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  width: PropTypes.number,
+  width: PropTypes.string,
   children: PropTypes.node,
   location: PropTypes.object,
 };

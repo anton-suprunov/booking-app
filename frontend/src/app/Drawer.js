@@ -13,43 +13,85 @@ import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import IconButton from 'material-ui/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
 
-import People from '@material-ui/icons/People';
-import DateRange from '@material-ui/icons/DateRange';
-import Lock from '@material-ui/icons/Lock';
-import Accessebility from '@material-ui/icons/Accessibility';
-import Dashboard from '@material-ui/icons/Dashboard';
-import Logout from '@material-ui/icons/ExitToApp';
+import PeopleIcon from '@material-ui/icons/People';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import LockIcon from '@material-ui/icons/Lock';
+import AccessebilityIcon from '@material-ui/icons/Accessibility';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-export default function AppDrawer(props) {
+import styles from './app.css';
+
+export default function AppDrawer({
+  open,
+  onHandleClick,
+}) {
   return (
-    <Drawer open={props.open} docked={true}>
-      <AppBar>
-        <Toolbar>
-          <Typography variant="title" color="inherit" >
-            BookingApp
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
-      <MenuItem leftIcon={<Dashboard />}>Главная страница</MenuItem>
-      <MenuItem leftIcon={<DateRange />}>Расписание</MenuItem>
-      <MenuItem leftIcon={<People />}>Преподаватели</MenuItem>
-      <MenuItem leftIcon={<Accessebility />}>Занятия</MenuItem>
+    <Drawer
+      classes={{ paper: styles.drawer }}
+      open={open}
+      variant="persistent"
+    >
+      <div className={styles.drawerHeader}>
+        <IconButton onClick={onHandleClick}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
       <Divider />
-      <MenuItem 
-        leftIcon={<Lock />} 
-        containerElement={<Link to={'/admins'} />}
-        primaryText="Администраторы"
-      />
-      <MenuItem leftIcon={<Logout />}>Выйти из аккаунта</MenuItem>
+
+      <MenuItem component={props => <Link to={'/'} {...props} />}>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Главная страница" />
+      </MenuItem>
+
+      <MenuItem>
+        <ListItemIcon>
+          <DateRangeIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Расписание" />
+      </MenuItem>
+
+      <MenuItem>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Преподаватели" />
+      </MenuItem>
+
+      <MenuItem>
+        <ListItemIcon>
+          <AccessebilityIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Занятия" />
+      </MenuItem>
+
+      <Divider />
+
+      <MenuItem component={props => <Link to={'/admins'} {...props} />}>
+        <ListItemIcon>
+          <LockIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Администраторы" />
+      </MenuItem>
+
+      <MenuItem>
+        <ListItemIcon>
+          <LogoutIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Выйти из аккаунта" />
+      </MenuItem>
     </Drawer>
   );
 }
 
 AppDrawer.propTypes = {
   open : PropTypes.bool,
+  onHandleClick: PropTypes.func,
 };
