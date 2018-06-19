@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import isEmail from 'validator/lib/isEmail';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+
 import {
   TextField,
 } from 'redux-form-material-ui';
@@ -11,9 +12,9 @@ import {
   Field,
   reduxForm,
 } from 'redux-form';
-import * as validations from 'shared/validations';
 
-import Snack from 'shared/components/Snack';
+
+import * as validations from 'shared/validations';
 import { login } from '../actions';
 import { isAuthentificated } from '../selectors';
 
@@ -41,29 +42,29 @@ class LoginForm extends Component {
     }
 
     return (
-      <React.Fragment>
-        <form onSubmit={handleSubmit(this.submitForm)} className={styles.container}>
+      <Paper className={styles.container}>
+        <form onSubmit={handleSubmit(this.submitForm)} >
           <h1 className={styles.title}>Welcome</h1>
 
           <label className={styles.label} htmlFor="email">
             <Field
               name="email"
               type="text"
-              hintText="Your email"
+              label="Your email"
               fullWidth={true}
               component={TextField} 
               validate={[ 
                 validations.required, 
                 validations.isEmail, 
               ]}
-            />          
+            />
           </label>
 
           <label className={styles.label} htmlFor="password">
               <Field
                 name="password"
                 type="password"
-                hintText="Your password"
+                label="Your password"
                 fullWidth={true}
                 component={TextField}
                 //errorText={this.state.errors.password || ''}
@@ -74,15 +75,18 @@ class LoginForm extends Component {
               />
             </label>
 
-          <RaisedButton 
-            type="submit"
-            label="Login" 
-            primary={true} 
-            className={styles.submit} 
-          />
+          <label className={styles.label}>
+            <Button 
+              variant="contained"
+              type="submit"
+              color="primary"
+              className={styles.submit}>
+              Login
+            </Button>
+          </label>
         </form>
 
-      </React.Fragment>
+      </Paper>
     );
   }
 }

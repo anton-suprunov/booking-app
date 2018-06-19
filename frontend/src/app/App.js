@@ -86,7 +86,7 @@ class App extends Component {
           [styles.content]: !this.state.drawerOpen, 
           [styles.contentExpanded]: this.state.drawerOpen,
         })}>
-          {/*children*/}
+          {children}
         </div>
       </div>
     );
