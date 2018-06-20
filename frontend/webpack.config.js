@@ -19,22 +19,28 @@ const defaultConfig = {
         //'react-hot-loader/patch',
     ],
   },
+  
   output: {
     path: path.join(__dirname, './dist'),
     filename: '[name].bundle.js',
     publicPath : '/',
   },
+
   resolve : {
+    extensions: [".js", ".jsx"],
+    
     modules: [
       path.resolve('./node_modules'),
       path.resolve('./src'),
-    ]
+    ],
   },
+  
   performance: {
-   maxAssetSize: 100000,
-   maxEntrypointSize: 300000,
-   //hints: 'warning'
- },
+    maxAssetSize: 100000,
+    maxEntrypointSize: 300000,
+     //hints: 'warning'
+  },
+
   module: {
     rules: [
       {
@@ -48,7 +54,7 @@ const defaultConfig = {
         },
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         enforce: 'pre',
         loader: 'eslint-loader',
         options: {
@@ -57,7 +63,7 @@ const defaultConfig = {
         },
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
@@ -76,6 +82,7 @@ const defaultConfig = {
       },
     ],
   },
+
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -88,24 +95,27 @@ const defaultConfig = {
     new HtmlWebpackPlugin({
       template : './src/index.html',
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
-      minChunks: function(module) {
-        return module.context && module.context.indexOf('node_modules') !== -1;
-      }
-    }),
-    /**
-     * Extracts manifest file, which contains list of files that webpack will load,
-     * this technique is needed to prevent hash update on vendor file when only app code changes
-     */
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "manifest",
-      minChunks: Infinity
-    })
+    
+   
   ],
+
   node: {
     fs: "empty"
-  }
+  },
+
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
+  },
+
+
 };
 
 module.exports = function() {

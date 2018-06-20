@@ -27,10 +27,10 @@ class App extends Component {
     };
   }
   
-  componentWillReceiveProps(nextProps) {
-    if (this.props.width !== nextProps.width) {
+  componentDidUpdate(prevProps) {
+    if (this.props.width !== prevProps.width) {
       this.setState({
-        drawerOpen: isWidthUp('sm', nextProps.width),
+        drawerOpen: isWidthUp('sm', this.props.width),
       });
     }
   }

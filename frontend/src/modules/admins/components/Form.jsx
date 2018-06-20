@@ -25,7 +25,7 @@ import {
   create,
   edit,
   formLeave,
- } from '../actions';
+} from '../actions';
 import * as selectors from '../selectors';
 
 import styles from '../styles.css';

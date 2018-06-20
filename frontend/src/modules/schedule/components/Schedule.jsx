@@ -45,12 +45,6 @@ class Schedule extends React.Component {
     });
   }
   
-  componentWillMount() {}
-  componentDidMount() {}
-  componentWillReceiveProps() {}
-  componentWillUpdate() {}
-  //shouldComponentUpdate() {}
-  
   render() {
     return (
       <div className={styles.wrap}>

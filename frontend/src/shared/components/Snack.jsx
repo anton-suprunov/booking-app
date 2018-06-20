@@ -27,9 +27,14 @@ class Snack extends Component {
     return true;
   }
 
-  componentWillReceiveProps(nextProps) {
+  /*componentWillReceiveProps(nextProps) {
     if ((this.props.open !== nextProps.open) && (nextProps.open !== this.state.open)) {
       this.setState({ open: nextProps.open });
+    }
+  }*/
+  componentDidUpdate(prevProps) {
+    if ((this.props.open !== prevProps.open) && (prevProps.open !== this.state.open)) {
+      this.setState({ open: this.props.open });
     }
   }
 

@@ -38,7 +38,7 @@ const MenuLink = ({
     <ListItemIcon>
       {icon}
     </ListItemIcon>
-      <ListItemText inset primary={title} />
+    <ListItemText inset primary={title} />
   </MenuItem>
 );
 MenuLink.propTypes = {

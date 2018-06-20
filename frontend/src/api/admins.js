@@ -25,7 +25,7 @@ export const createAdmin = ({
 
 export const deleteAdmin = (id) => {
   return axios.delete(`${config.API.admins}${id}`);
-    //.then(res => res.data);
+  //.then(res => res.data);
 };
 
 export const editAdmin = (values) => {

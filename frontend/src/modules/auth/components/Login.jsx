@@ -61,19 +61,19 @@ class LoginForm extends Component {
           </label>
 
           <label className={styles.label} htmlFor="password">
-              <Field
-                name="password"
-                type="password"
-                label="Your password"
-                fullWidth={true}
-                component={TextField}
-                //errorText={this.state.errors.password || ''}
-                validate={[
-                  validations.required,
-                  //validations.minLength5,
-                ]}
-              />
-            </label>
+            <Field
+              name="password"
+              type="password"
+              label="Your password"
+              fullWidth={true}
+              component={TextField}
+              //errorText={this.state.errors.password || ''}
+              validate={[
+                validations.required,
+                //validations.minLength5,
+              ]}
+            />
+          </label>
 
           <label className={styles.label}>
             <Button 
