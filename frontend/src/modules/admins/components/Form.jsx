@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux'; 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { 
   Field, 
   reduxForm, 
 } from 'redux-form';
-import axios from 'axios';
+
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {
   Checkbox,
   TextField,
 } from 'redux-form-material-ui';
 
-import config from 'config';
 import * as validations from 'shared/validations';
-import Snack from 'shared/components/Snack';
 import {
   create,
   edit,
@@ -94,7 +91,7 @@ class AdminForm extends Component {
             <Field
               name="email"
               type="text"
-              hintText="Email"
+              label="Email"
               fullWidth={true}
               component={TextField} 
               validate={[ 
@@ -123,7 +120,7 @@ class AdminForm extends Component {
               <Field
                 name="password"
                 type="password"
-                hintText="Password"
+                label="Password"
                 fullWidth={true}
                 component={TextField}
                 validate={(...args) => this.validatePasswords('password', ...args)}
@@ -134,7 +131,7 @@ class AdminForm extends Component {
               <Field
                 name="password2"
                 type="password"
-                hintText="Confirm password"
+                label="Confirm password"
                 fullWidth={true}
                 component={TextField}
                 validate={(...args) => this.validatePasswords('password2', ...args)}
@@ -143,29 +140,36 @@ class AdminForm extends Component {
           </div>
 
           <label className={styles.label} htmlFor="superuser">
-            <Field 
-              name="superuser" 
-              id="superuser"
-              label="Super administrator"
-              component={Checkbox}
-              defaultValue={false}
-            />
-            
+            <FormControlLabel 
+              control={
+                <Field
+                  name="superuser"
+                  id="superuser"
+                  defaultValue={false}
+                  component={Checkbox} />
+              } 
+              label="Super administrator" 
+            />            
           </label>
 
-          <RaisedButton 
+          <Button 
             type="submit"
-            label={ editingMode ? 'Edit Administrator' : 'Add Administrator' }
-            primary={true}
+            color="primary"
+            variant="contained"
             className={styles.submit} 
-          />
+          >
+            {editingMode ? 'Edit Administrator' : 'Add Administrator'}
+          </Button>
 
           <div className={styles.cancel}>
-            <FlatButton 
+            <Button 
               label="Cancel" 
-              secondary={true}
-              containerElement={ <Link to="/admins" /> }
-            />
+              color="secondary"
+              component={Link}
+              to="/admins"
+            >
+              Cancel
+            </Button>
           </div>
         </form>
         

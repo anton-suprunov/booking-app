@@ -72,18 +72,18 @@ class LoginForm extends Component {
                 validations.required,
                 //validations.minLength5,
               ]}
+              //classes={{ FormHelperText: styles.errorField }}
             />
           </label>
 
-          <label className={styles.label}>
+          <div className={styles.submit}>
             <Button 
               variant="contained"
               type="submit"
-              color="primary"
-              className={styles.submit}>
+              color="primary">
               Login
             </Button>
-          </label>
+          </div>
         </form>
 
       </Paper>

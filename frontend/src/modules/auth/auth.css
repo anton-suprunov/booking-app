@@ -10,7 +10,22 @@
 }
 
 .title { composes: title from '../../shared/forms.css'; }
-.label { composes: label from '../../shared/forms.css'; }
+.label { 
+  composes: label from '../../shared/forms.css'; 
+  padding-bottom: 20px;
+  margin-top: 10px;
+}
+/* error text */
+.label p {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+}
+
 .submit {
-  /*composes: submit from '../../shared/forms.css'; */
+  margin-top: 20px;
+}
+
+.error-field {
+  color: green !important;
 }

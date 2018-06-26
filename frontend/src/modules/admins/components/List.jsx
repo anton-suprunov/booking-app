@@ -37,15 +37,16 @@ class List extends Component {
 
     return (
       <React.Fragment>
- 
-        <Button 
-          variant="contained" 
-          className={styles.addBtn} 
-          component={Link}
-          to="/admins/create"
-          color="primary">
-          Добавить администратора
-        </Button>
+        
+        <div className={styles.addBtn}>
+          <Button 
+            variant="contained"
+            component={Link}
+            to="/admins/create"
+            color="primary">
+            Добавить администратора
+          </Button>
+        </div>
 
         <Table style={{
           maxWidth: '90%',
