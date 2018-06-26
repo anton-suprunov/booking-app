@@ -23,10 +23,7 @@ export const createAdmin = ({
 
 export const deleteAdmin = (id) => {
   return axios.delete(`${config.API.admins}${id}`);
-<<<<<<< HEAD
-=======
   //.then(res => res.data);
->>>>>>> material-ui-migration
 };
 
 export const editAdmin = (values) => {
