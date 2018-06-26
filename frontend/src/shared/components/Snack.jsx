@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar';
 import isEqual from 'lodash/isEqual';
 
 class Snack extends Component {
@@ -27,9 +27,14 @@ class Snack extends Component {
     return true;
   }
 
-  componentWillReceiveProps(nextProps) {
+  /*componentWillReceiveProps(nextProps) {
     if ((this.props.open !== nextProps.open) && (nextProps.open !== this.state.open)) {
       this.setState({ open: nextProps.open });
+    }
+  }*/
+  componentDidUpdate(prevProps) {
+    if ((this.props.open !== prevProps.open) && (prevProps.open !== this.state.open)) {
+      this.setState({ open: this.props.open });
     }
   }
 

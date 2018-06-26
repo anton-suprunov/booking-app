@@ -2,47 +2,115 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-//import RaisedButton from 'material-ui/RaisedButton';
-//import classNames from 'classnames';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import FlatButton from 'material-ui/FlatButton';
-import People from 'material-ui/svg-icons/social/people';
-import DateRange from 'material-ui/svg-icons/action/date-range';
-import Lock from 'material-ui/svg-icons/action/lock';
-import Accessebility from 'material-ui/svg-icons/action/accessibility';
-import Dashboard from 'material-ui/svg-icons/action/dashboard';
-import Logout from 'material-ui/svg-icons/action/exit-to-app';
-import Divider from 'material-ui/Divider';
 
-export default function AppDrawer(props) {
+import Drawer from '@material-ui/core/Drawer';
+import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+
+import PeopleIcon from '@material-ui/icons/People';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import LockIcon from '@material-ui/icons/Lock';
+import AccessebilityIcon from '@material-ui/icons/Accessibility';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+
+import styles from './app.css';
+
+const muiStyles = theme => ({
+  drawerHeader: {
+    ...theme.mixins.toolbar,
+  },
+});
+
+const MenuLink = ({
+  linkTo,
+  title,
+  icon = null,
+}) => (
+  <MenuItem component={props => <Link to={linkTo} {...props} />}>
+    <ListItemIcon>
+      {icon}
+    </ListItemIcon>
+    <ListItemText inset primary={title} />
+  </MenuItem>
+);
+MenuLink.propTypes = {
+  linkTo: PropTypes.string,
+  icon: PropTypes.object,
+  title: PropTypes.string,
+};
+
+const AppDrawer = ({
+  open,
+  onHandleClick,
+  classes,
+}) => {
   return (
-    <Drawer open={props.open} docked={true}>
-      <AppBar
-        title='BookingApp'
-        //onTitleTouchTap={handleTouchTap}
-        showMenuIconButton={false}
-        //iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-      />
-      <MenuItem leftIcon={<Dashboard />}>Главная страница</MenuItem>
-      <MenuItem leftIcon={<DateRange />}>Расписание</MenuItem>
-      <MenuItem leftIcon={<People />}>Преподаватели</MenuItem>
-      <MenuItem leftIcon={<Accessebility />}>Занятия</MenuItem>
+    <Drawer
+      classes={{ paper: styles.drawer }}
+      open={open}
+      variant="persistent"
+    >
+      <div 
+        className={classnames(styles.drawerHeader, classes.drawerHeader)}
+      >
+        <IconButton onClick={onHandleClick}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
       <Divider />
-      <MenuItem 
-        leftIcon={<Lock />} 
-        containerElement={<Link to={'/admins'} />}
-        primaryText="Администраторы"
+
+      <MenuLink 
+        linkTo="/"
+        title={'Главная страница'}
+        icon={<DashboardIcon />}
       />
-      <MenuItem leftIcon={<Logout />}>Выйти из аккаунта</MenuItem>
+
+      <MenuLink
+        linkTo="/"
+        title={'Расписание'}
+        icon={<DateRangeIcon />}
+      />
+
+      <MenuLink
+        linkTo="/"
+        title={'Преподаватели'}
+        icon={<PeopleIcon />}
+      />
+
+      <MenuLink
+        linkTo="/"
+        title={'Занятия'}
+        icon={<AccessebilityIcon />}
+      />
+
+      <Divider />
+
+      <MenuLink
+        linkTo="/admins"
+        title={'Администраторы'}
+        icon={<LockIcon />}
+      />
+
+      <MenuLink
+        linkTo="/"
+        title={'Выйти из аккаунта'}
+        icon={<LogoutIcon />}
+      />
     </Drawer>
   );
-}
-
-AppDrawer.propTypes = {
-  open : PropTypes.bool,
 };
+AppDrawer.propTypes = {
+  open: PropTypes.bool,
+  onHandleClick: PropTypes.func,
+  classes: PropTypes.object,
+};
+
+export default withStyles(muiStyles, { withTheme: true })(AppDrawer);

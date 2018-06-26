@@ -27,14 +27,14 @@ class PrivateRoute extends Component {
     } = this.props;
     return (
       <React.Fragment>
-      { isAuthentificated && <Route component={component} {...props} /> }
-      { hasErrored && <Redirect 
+        { isAuthentificated && <Route component={component} {...props} /> }
+        { hasErrored && <Redirect 
           to={{
             pathname: redirectTo, 
             state: {from: props.location},
           }} 
         />
-      }
+        }
       </React.Fragment>
     );
   }

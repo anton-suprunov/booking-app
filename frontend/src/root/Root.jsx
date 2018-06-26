@@ -30,14 +30,14 @@ class Root extends Component {
             <Switch>
               <Route path={'/' + Auth.consts.NAME} component={Auth.components.Root} />
               <App>
-                <Switch>
+                {<Switch>
                   <PrivateRoute path={'/' + Admins.consts.NAME} component={Admins.components.Root} />
                   <PrivateRoute path='/' component={Schedule.components.Schedule} />
-                </Switch>
+                </Switch>}
               </App>
             </Switch>
           </Router>
-         <GlobalMessage />
+          <GlobalMessage />
         </React.Fragment>
       </Provider>
     );

@@ -8,6 +8,7 @@ const webpack = require('webpack'),
   cssnano = require('cssnano');
 
 module.exports = {
+  mode: 'production',
   output : {
     chunkFilename: '[name].[chunkhash:8].js',
     filename: '[name].[chunkhash:8].js',
@@ -111,10 +112,10 @@ module.exports = {
     new webpack.HashedModuleIdsPlugin(),
 
     //new BabiliPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
+    /*new webpack.optimize.UglifyJsPlugin({
       compress : {
         warnings: false
       }
-    })
+    })*/
   ]
 }

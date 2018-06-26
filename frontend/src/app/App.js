@@ -4,11 +4,18 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 
-import AppBar from 'material-ui/AppBar';
-import withWidth, {LARGE} from 'material-ui/utils/withWidth';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import MenuIcon from '@material-ui/icons/Menu';
+
+import withWidth, {
+  isWidthUp,
+} from '@material-ui/core/withWidth';
+
 
 import Drawer from './Drawer';
-
 import styles from './app.css';
 
 class App extends Component {
@@ -20,10 +27,10 @@ class App extends Component {
     };
   }
   
-  componentWillReceiveProps(nextProps) {
-    if (this.props.width !== nextProps.width) {
+  componentDidUpdate(prevProps) {
+    if (this.props.width !== prevProps.width) {
       this.setState({
-        drawerOpen: nextProps.width === LARGE,
+        drawerOpen: isWidthUp('sm', this.props.width),
       });
     }
   }
@@ -35,7 +42,10 @@ class App extends Component {
   }
 
   render() {
-    const { children, location } = this.props;
+    const { 
+      children, 
+      location, 
+    } = this.props;
     
     let title = '';
     if (location.pathname.indexOf('/admins') === 0) {
@@ -49,11 +59,28 @@ class App extends Component {
             [styles.bar]: !this.state.drawerOpen, 
             [styles.barExpanded]: this.state.drawerOpen,
           })}
-          onLeftIconButtonTouchTap={this.handleDrawerToggle}
-          title={title}
+        >
+          <Toolbar>
+            <IconButton 
+              
+              color="inherit" 
+              aria-label="Menu"
+              onClick={this.handleDrawerToggle}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            <Typography variant="title" color="inherit" >
+              {title}
+            </Typography>
+            {/*<Button color="inherit">Login</Button>*/}
+          </Toolbar>
+        </AppBar>
+      
+        <Drawer 
+          open={this.state.drawerOpen} 
+          onHandleClick={this.handleDrawerToggle}
         />
-        
-        <Drawer open={this.state.drawerOpen} />
 
         <div className={classNames({
           [styles.content]: !this.state.drawerOpen, 
@@ -67,7 +94,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  width: PropTypes.number,
+  width: PropTypes.string,
   children: PropTypes.node,
   location: PropTypes.object,
 };
