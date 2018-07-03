@@ -18,6 +18,7 @@ import {
 } from './actions';
 
 const byId = (state = {}, action) => {
+  
   switch (action.type) {
   case CREATE_SUCCESS: {
     return {

@@ -14,6 +14,7 @@ class PrivateRoute extends Component {
 
   componentDidMount() {
     if (!this.props.isAuthentificated) {
+      console.log('auto login attempt');
       this.props.login();
     }
   }

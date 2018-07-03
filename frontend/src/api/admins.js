@@ -3,9 +3,11 @@ import config from '../config';
 
 import app from './feathers-setup';
 
+const service = app.service('admins');
+
 export const fetchAdmins = () => {
-  return axios.get(config.API.admins)
-    .then(res => res.data.data);
+  return service.find()
+    .then(res => res.data);
 };
 
 export const createAdmin = ({ 
@@ -13,12 +15,11 @@ export const createAdmin = ({
   password, 
   superuser, 
 }) => {
-  return axios.post(config.API.admins, {
+  return service.create({
     email,
     password,
     superuser,
-  })
-    .then(res => res.data);
+  });
 };
 
 export const deleteAdmin = (id) => {

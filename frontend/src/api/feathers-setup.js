@@ -18,4 +18,8 @@ app.configure(auth({
   entity: 'admin',
 }));
 
+app.on('authenticated', () => {
+  console.log('authenthicated');
+});
+
 export default app;

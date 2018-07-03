@@ -15,7 +15,7 @@ class Snack extends Component {
     this.setState({ open: false });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {    
     if (!nextState.open) {
       return true;
     }
@@ -23,44 +23,29 @@ class Snack extends Component {
     if (isEqual(this.props, nextProps)) {
       return false;
     }
-
+    
     return true;
-  }
-
-  /*componentWillReceiveProps(nextProps) {
-    if ((this.props.open !== nextProps.open) && (nextProps.open !== this.state.open)) {
-      this.setState({ open: nextProps.open });
-    }
-  }*/
-  componentDidUpdate(prevProps) {
-    if ((this.props.open !== prevProps.open) && (prevProps.open !== this.state.open)) {
-      this.setState({ open: this.props.open });
-    }
   }
 
   render() {
     const { 
       message = '',
+      open = false,
     } = this.props;
-    const { 
-      open = false, 
-    } = this.state;
     
     return (
       <Snackbar
         open={open}
-        message={message}
-        autoHideDuration={3000}
-        style={{
-          top: 0,
-          textAlign: 'center',
-          bottom: 'auto',
-          left: (window.innerWidth - 288) / 2,
-          transform: open ?
-            'translate3d(0, 0, 0)' : 
-            'translate3d(0, -50px, 0)',
+        ContentProps={{
+          'aria-describedby': 'message-id',
         }}
-        onRequestClose={this.handleClose}
+        message={<span id="message-id">{message}</span>}
+        autoHideDuration={1000}
+        onClose={this.handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
       />
     );
   }

@@ -43,7 +43,7 @@ export const create = formValues => dispatch => {
 
   return createAdmin(formValues)
     .then(res => dispatch(createSuccess(res)))
-    .catch(res => dispatch(createError(res.response.data.message)));
+    .catch(res => dispatch(createError(res.message)));
 };
 
 const editSuccess = res => ({

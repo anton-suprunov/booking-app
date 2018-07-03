@@ -6,8 +6,8 @@ import {
 } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
-import DoneIcon from 'material-ui/svg-icons/action/done';
-import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import DoneIcon from '@material-ui/icons/Done';
+import CloseIcon from '@material-ui/icons/Close';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -61,7 +61,7 @@ class List extends Component {
 
           <TableBody>
             { admins.map(admin => (
-              <TableRow key={admin._id} hoverable={true}>
+              <TableRow key={admin._id}>
                 <TableCell>{admin.email}</TableCell>
                 <TableCell>{admin.superuser ? <DoneIcon /> : <CloseIcon />}</TableCell>
                 <TableCell>

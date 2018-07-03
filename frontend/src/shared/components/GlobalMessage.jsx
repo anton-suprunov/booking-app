@@ -12,7 +12,7 @@ class GlobalMessage extends Component {
     if (this.props.message && this.props.message.length > 0) { 
       setTimeout(() => {
         this.props.resetGlobalMessage();
-      }, 1000);
+      }, 3000);
     }
   }
 
@@ -27,6 +27,7 @@ class GlobalMessage extends Component {
           open={message !== null && message.length > 0}
           message={message || ''}
         />
+
       </React.Fragment>
     );
   }
