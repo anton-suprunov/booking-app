@@ -1,5 +1,4 @@
-import axios from 'axios';
-import config from '../config';
+//import config from '../config';
 
 import app from './feathers-setup';
 
@@ -22,12 +21,10 @@ export const createAdmin = ({
   });
 };
 
-export const deleteAdmin = (id) => {
-  return axios.delete(`${config.API.admins}${id}`);
-  //.then(res => res.data);
+export const deleteAdmin = id => {
+  return service.remove(id);
 };
 
-export const editAdmin = (values) => {
-  return axios.put(`${config.API.admins}${values._id}`, values)
-    .then(res => res.data);
+export const editAdmin = values => {
+  return service.patch(values._id, values);
 };

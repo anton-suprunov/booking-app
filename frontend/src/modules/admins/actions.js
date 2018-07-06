@@ -1,4 +1,3 @@
-//import { AuthLogin } from 'api/auth';
 import { 
   fetchAdmins, 
   createAdmin,
@@ -23,8 +22,6 @@ export const DELETE_REQUEST = `${consts.NAME}_DELETE_REQUEST`;
 export const DELETE_SUCCESS = `${consts.NAME}_DELETE_SUCCESS`;
 export const DELETE_ERROR = `${consts.NAME}_DELETE_ERROR`;
 
-export const FORM_LEAVE = `${consts.NAME}_FORM_LEAVE`;
-
 const createSuccess = (res) => ({
   type: CREATE_SUCCESS,
   res,
@@ -45,6 +42,7 @@ export const create = formValues => dispatch => {
     .then(res => dispatch(createSuccess(res)))
     .catch(res => dispatch(createError(res.message)));
 };
+
 
 const editSuccess = res => ({
   type: EDIT_SUCCESS,
@@ -107,7 +105,3 @@ export const deleteAdmin = id => dispatch => {
     .then(res => dispatch(deleteSuccess(id)))
     .catch(err => dispatch(deleteError(err)));
 };
-
-export const formLeave = () => ({
-  type: FORM_LEAVE,
-});

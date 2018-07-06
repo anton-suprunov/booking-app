@@ -1,24 +1,13 @@
 import { combineReducers } from 'redux';
 
 import { 
-  CREATE_REQUEST, 
   CREATE_SUCCESS, 
-  CREATE_ERROR,
-
-  EDIT_REQUEST,
   EDIT_SUCCESS,
-  EDIT_ERROR,
-
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-  FETCH_ERROR,
-  
+  FETCH_SUCCESS,  
   DELETE_SUCCESS,
-  FORM_LEAVE,
 } from './actions';
 
 const byId = (state = {}, action) => {
-  
   switch (action.type) {
   case CREATE_SUCCESS: {
     return {
@@ -26,6 +15,7 @@ const byId = (state = {}, action) => {
       [action.res._id]: action.res,
     };
   }
+  
   case FETCH_SUCCESS: {
     return action.admins.reduce((admins, admin) => {
       let newAdmin = { 
@@ -36,11 +26,19 @@ const byId = (state = {}, action) => {
       return admins;
     }, {});
   }
+  
   case DELETE_SUCCESS: {
     let newState = { ...state };
     delete newState[action.id];
     return newState;
   }
+
+  case EDIT_SUCCESS: {
+    let newState = { ...state };
+    newState[action.res._id] = action.res;
+    return newState;
+  }
+
   default:
     return state;
   }

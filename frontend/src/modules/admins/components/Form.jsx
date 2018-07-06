@@ -21,8 +21,9 @@ import * as validations from 'shared/validations';
 import {
   create,
   edit,
-  formLeave,
+  fetch,
 } from '../actions';
+
 import * as selectors from '../selectors';
 
 import styles from '../styles.css';
@@ -30,13 +31,19 @@ import styles from '../styles.css';
 class AdminForm extends Component {
   constructor(props) {
     super(props);
-
+    
+    const isEditing = props.match.params.adminId !== undefined;
+    
     this.state = {
-      passwordsShown: !props.initialValues,
+      passwordsShown: !isEditing,
+      isEditing,
     };
   }
-  componentWillUnmount() {
-    this.props.onUnmount();
+
+  componentDidMount() {
+    if (this.state.isEditing && !this.props.initialValues) {
+      this.props.fetch();
+    }
   }
 
   togglePasswords = () => {
@@ -64,7 +71,7 @@ class AdminForm extends Component {
   }
 
   submitForm = (values) => {
-    if (this.props.initialValues && this.props.initialValues._id.length) {
+    if (this.state.isEditing) {
       return this.props.edit(values)
         .then(() => this.props.history.push('/admins'));
     }
@@ -74,19 +81,17 @@ class AdminForm extends Component {
 
   render() {
     const { 
-      hasErrored, 
       handleSubmit, 
-      create,
-      edit,
-      initialValues,
     } = this.props;
-
-    const editingMode = initialValues && initialValues._id.length > 0;
+    
+    const {
+      isEditing,
+    } = this.state;
 
     return (
       <React.Fragment>
         <form onSubmit={handleSubmit(this.submitForm)}>
-          <h1 className={styles.title}>{editingMode ? 'Редактировать администратора' : 'Добавить администратора'}</h1>
+          <h1 className={styles.title}>{isEditing ? 'Редактировать администратора' : 'Добавить администратора'}</h1>
           <label className={styles.label} htmlFor="email">
             <Field
               name="email"
@@ -98,11 +103,11 @@ class AdminForm extends Component {
                 validations.required, 
                 validations.isEmail, 
               ]}
-              disabled={editingMode}
+              disabled={isEditing}
             />          
           </label>
 
-          { editingMode && !this.state.passwordsShown ?
+          { isEditing && !this.state.passwordsShown ?
             <a
               href="#"
               onClick={(e) => this.togglePasswords()}
@@ -158,7 +163,7 @@ class AdminForm extends Component {
             variant="contained"
             className={styles.submit} 
           >
-            {editingMode ? 'Edit Administrator' : 'Add Administrator'}
+            {isEditing ? 'Edit Administrator' : 'Add Administrator'}
           </Button>
 
           <div className={styles.cancel}>
@@ -187,6 +192,8 @@ AdminForm.propTypes = {
   create: PropTypes.func,
   edit: PropTypes.func,
   history: PropTypes.object,
+  match: PropTypes.object,
+  fetch: PropTypes.func,
 };
 
 export { AdminForm };
@@ -198,7 +205,7 @@ const mapState = (state, ownProps) => ({
 export default connect(mapState, {
   create,
   edit,
-  onUnmount: formLeave,
+  fetch,
 })(
   reduxForm({
     form: 'adminForm',

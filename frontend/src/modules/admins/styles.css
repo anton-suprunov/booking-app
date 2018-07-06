@@ -22,9 +22,8 @@
   margin-right: 10px;
 }
 .cancel {
-  position: relative;
-  top: 13px;
   display: inline-block;
+  margin-left: 10px
 }
 
 .change-password {
