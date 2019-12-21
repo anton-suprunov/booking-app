@@ -12,6 +12,7 @@ import PrivateRoute from './PrivateRoute';
 import App from 'app/App';
 import Auth from 'modules/auth/';
 import Admins from 'modules/admins/';
+import Teachers from 'modules/teachers/';
 import Schedule from 'modules/schedule/';
 import GlobalMessage from 'shared/components/GlobalMessage';
 
@@ -31,6 +32,7 @@ class Root extends Component {
               <Route path={'/' + Auth.consts.NAME} component={Auth.components.Root} />
               <App>
                 {<Switch>
+                  <PrivateRoute path={'/' + Teachers.consts.NAME} component={Teachers.components.Root} />
                   <PrivateRoute path={'/' + Admins.consts.NAME} component={Admins.components.Root} />
                   <PrivateRoute path='/' component={Schedule.components.Schedule} />
                 </Switch>}

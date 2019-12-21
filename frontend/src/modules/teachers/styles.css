@@ -1,0 +1,45 @@
+.add-btn {
+  margin: 20px 0;
+}
+
+.edit-btn {
+  composes: link-btn-wrap from '../../shared/buttons.css';
+}
+
+.delete-btn {
+  
+}
+
+.title {
+  composes: title from '../../shared/forms.css';
+  margin-top: 30px;
+  font-size: 24px;
+}
+
+.label { composes: label from '../../shared/forms.css'; }
+.submit { 
+  composes: submit from '../../shared/forms.css'; 
+  margin-right: 10px;
+}
+.cancel {
+  display: inline-block;
+  margin-left: 10px
+}
+
+.change-password {
+  font-size: 12px;
+  color:#444;
+  border-bottom: 1px dashed #444;
+  text-decoration: none;
+  display: inline-block;
+  margin: 15px 0 10px;
+}
+
+.passwords-wrap {
+  height: 0;
+  overflow: hidden;
+  transition: height ease 0.2s;
+}
+.passwords-wrap.passwords-wrap-active {
+  height: auto;
+}

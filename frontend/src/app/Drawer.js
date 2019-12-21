@@ -74,19 +74,19 @@ const AppDrawer = ({
       />
 
       <MenuLink
-        linkTo="/"
+        linkTo="/schedule"
         title={'Расписание'}
         icon={<DateRangeIcon />}
       />
 
       <MenuLink
-        linkTo="/"
+        linkTo="/teachers"
         title={'Преподаватели'}
         icon={<PeopleIcon />}
       />
 
       <MenuLink
-        linkTo="/"
+        linkTo="/classes"
         title={'Занятия'}
         icon={<AccessebilityIcon />}
       />

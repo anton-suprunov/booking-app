@@ -17,8 +17,9 @@ import TableRow from '@material-ui/core/TableRow';
 
 import { 
   fetch,
-  deleteAdmin,
+  deleteTeacher,
 } from '../actions';
+
 import * as selectors from '../selectors';
 
 import styles from '../styles.css';
@@ -31,7 +32,7 @@ class List extends Component {
   render() {
     const { 
       admins, 
-      deleteAdmin, 
+      deleteTeacher, 
     } = this.props;
 
     return (
@@ -41,7 +42,7 @@ class List extends Component {
           <Button 
             variant="contained"
             component={Link}
-            to="/admins/create"
+            to="/teachers/create"
             color="primary">
             Добавить администратора
           </Button>
@@ -68,14 +69,14 @@ class List extends Component {
                   <Button 
                     className={styles.editBtn} 
                     component={Link}  
-                    to={`/admins/edit/${admin._id}`} 
+                    to={`/teachers/edit/${admin._id}`} 
                     color="primary">
                   Редактировать
                   </Button>
 
                   <Button 
                     className={styles.deleteBtn} 
-                    onClick={ () => deleteAdmin(admin._id) } 
+                    onClick={ () => deleteTeacher(admin._id) } 
                     color="secondary">
                   Удалить
                   </Button>
@@ -91,7 +92,7 @@ class List extends Component {
 }
 List.propTypes = {
   fetch: PropTypes.func,
-  deleteAdmin: PropTypes.func,
+  deleteTeacher: PropTypes.func,
   admins: PropTypes.array,
   location: PropTypes.object,
 };
@@ -104,7 +105,7 @@ const mapState = state => ({
 
 export default connect(mapState, {
   fetch,
-  deleteAdmin,
+  deleteTeacher,
 })(
   List
 );
