@@ -1,23 +1,21 @@
-import 'babel-polyfill';
+//import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import {
+//import injectTapEventPlugin from 'react-tap-event-plugin';
+/*import {
   MuiThemeProvider,
   createMuiTheme,
-} from '@material-ui/core/styles';
+} from '@material-ui/core/styles';*/
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 import './globals.css';
 import Root from './root/Root';
 
-const theme = createMuiTheme();
+//const theme = createMuiTheme();
 
 ReactDOM.render(
-  <MuiThemeProvider theme={theme}>
-    <Root />
-  </MuiThemeProvider>,
+  <Root />,  
   document.getElementById('root')
 );

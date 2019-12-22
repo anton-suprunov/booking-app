@@ -66,18 +66,7 @@ const defaultConfig = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              'react',
-                ['env', { modules: false }],
-            ],
-            plugins : [
-            'syntax-dynamic-import',
-            'transform-class-properties',
-            'transform-object-rest-spread'
-            ]
-          },
+          loader: 'babel-loader'
         },
       },
     ],

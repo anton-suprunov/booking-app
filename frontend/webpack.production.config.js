@@ -3,7 +3,7 @@ const webpack = require('webpack'),
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   CleanWebpackPlugin = require('clean-webpack-plugin'),
   GitRevisionPlugin = require('git-revision-webpack-plugin'),
-  BabiliPlugin = require('babili-webpack-plugin'),    
+  //BabiliPlugin = require('babili-webpack-plugin'),    
   OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
   cssnano = require('cssnano');
 

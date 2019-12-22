@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import {
   TextField,
 } from 'redux-form-material-ui';
+
 import {
   Field,
   reduxForm,
@@ -47,7 +48,7 @@ class LoginForm extends Component {
           <h1 className={styles.title}>Welcome</h1>
 
           <label className={styles.label} htmlFor="email">
-            <Field
+            {/*<Field
               name="email"
               type="text"
               label="Your email"
@@ -57,11 +58,11 @@ class LoginForm extends Component {
                 validations.required, 
                 validations.isEmail, 
               ]}
-            />
+            />*/}
           </label>
 
           <label className={styles.label} htmlFor="password">
-            <Field
+            {/*<Field
               name="password"
               type="password"
               label="Your password"
@@ -73,7 +74,7 @@ class LoginForm extends Component {
                 //validations.minLength5,
               ]}
               //classes={{ FormHelperText: styles.errorField }}
-            />
+            />*/}
           </label>
 
           <div className={styles.submit}>
