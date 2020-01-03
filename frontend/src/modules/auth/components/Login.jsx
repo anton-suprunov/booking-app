@@ -2,99 +2,70 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
+import * as Yup from 'yup';
+import { Formik, Form } from 'formik';
+import { Button, Paper } from '@material-ui/core';
+import styled from 'styled-components';
 
-import {
-  TextField,
-} from 'redux-form-material-ui';
-
-import {
-  Field,
-  reduxForm,
-} from 'redux-form';
-
-
-import * as validations from 'shared/validations';
+import TextInput from '../../../shared/components/TextInput';
 import { login } from '../actions';
 import { isAuthentificated } from '../selectors';
+import { FormTitle } from '../../../shared/components/styled/TextElements';
 
-import styles from '../auth.css';
+const Container = styled(Paper)`
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left:  50%;
+  transform: translate(-50%, -50%);
+  padding:  30px;
+`;
 
-class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {};
+const SubmitBtn = styled(Button)`
+  &&  { margin-top: 20px; }
+`;
+
+const LoginForm = (props) => {    
+  if (props.isAuthentificated) {
+    return <Redirect to="" />;
   }
 
-  submitForm = (values) => {
-    return this.props.login(values);
-  }
+  return (
+    <Container>
+      <FormTitle>Welcome</FormTitle>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={Yup.object({
+          email: Yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
+          password: Yup.string()
+            .min(5, 'Please use password with more then 5 characters')
+            .required('Password is required'),
+        })}
+        onSubmit={(values, { setSubmitting }) => {
+          props.login(values);
 
-  render() {
-    const { 
-      isAuthentificated, 
-      handleSubmit,
-    } = this.props;
-    
-    if (isAuthentificated) {
-      return <Redirect to="" />;
-    }
-
-    return (
-      <Paper className={styles.container}>
-        <form onSubmit={handleSubmit(this.submitForm)} >
-          <h1 className={styles.title}>Welcome</h1>
-
-          <label className={styles.label} htmlFor="email">
-            {/*<Field
-              name="email"
-              type="text"
-              label="Your email"
-              fullWidth={true}
-              component={TextField} 
-              validate={[ 
-                validations.required, 
-                validations.isEmail, 
-              ]}
-            />*/}
-          </label>
-
-          <label className={styles.label} htmlFor="password">
-            {/*<Field
-              name="password"
-              type="password"
-              label="Your password"
-              fullWidth={true}
-              component={TextField}
-              //errorText={this.state.errors.password || ''}
-              validate={[
-                validations.required,
-                //validations.minLength5,
-              ]}
-              //classes={{ FormHelperText: styles.errorField }}
-            />*/}
-          </label>
-
-          <div className={styles.submit}>
-            <Button 
-              variant="contained"
-              type="submit"
-              color="primary">
-              Login
-            </Button>
-          </div>
-        </form>
-
-      </Paper>
-    );
-  }
-}
+          setTimeout(() => {
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <TextInput name="email" placeholder="Your email" />
+            <TextInput name="password" placeholder="Your password" />
+            
+            <SubmitBtn disabled={isSubmitting} color="primary" variant="contained" type="submit">Login</SubmitBtn>
+          </Form>
+        )}
+      </Formik>
+    </Container>
+  );
+};
 LoginForm.propTypes = {
   login: PropTypes.func,
   isAuthentificated: PropTypes.bool,
-  handleSubmit: PropTypes.func,
 };
 
 export { LoginForm };
@@ -103,12 +74,4 @@ const mapState = state => ({
   isAuthentificated: isAuthentificated(state),
 });
 
-export default connect(mapState, { 
-  login,
-})(
-  reduxForm({
-    form: 'loginForm',
-  })(
-    LoginForm
-  )
-);
+export default connect(mapState, { login })(LoginForm);

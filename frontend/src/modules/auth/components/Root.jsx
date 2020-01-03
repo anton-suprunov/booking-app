@@ -4,9 +4,7 @@ import { Route } from 'react-router-dom';
 import Login from './Login';
 
 const Root = ({ match }) => (
-  <div>
-    <Route path={`${match.url}/login`} component={Login} />
-  </div>
+  <Route path={`${match.url}/login`} component={Login} />
 );
 Root.propTypes = {
   match: PropTypes.object,

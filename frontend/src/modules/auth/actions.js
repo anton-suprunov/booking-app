@@ -18,6 +18,7 @@ const loginError = (res) => ({
 });
 
 export const login = values => dispatch => {
+  console.log(values);
   dispatch({
     type: LOGIN_REQUEST,
   });

@@ -5,9 +5,11 @@ import {
   Route, 
   Switch, 
 } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
 import configureStore from 'store/configureStore';
 import PrivateRoute from './PrivateRoute';
+
 
 import App from 'app/App';
 import Auth from 'modules/auth/';
@@ -16,17 +18,15 @@ import Teachers from 'modules/teachers/';
 import Schedule from 'modules/schedule/';
 import GlobalMessage from 'shared/components/GlobalMessage';
 
+import Theme from '../shared/styles/theme';
+
 const store = configureStore();
 
-class Root extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <Provider store={store}>
-        <React.Fragment>
+const Root = () => {
+  return (
+    <Provider store={store}>
+      <React.Fragment>
+        <ThemeProvider theme={Theme}>
           <Router>
             <Switch>
               <Route path={'/' + Auth.consts.NAME} component={Auth.components.Root} />
@@ -40,11 +40,11 @@ class Root extends Component {
             </Switch>
           </Router>
           <GlobalMessage />
-        </React.Fragment>
-      </Provider>
-    );
-  }
-}
+        </ThemeProvider>
+      </React.Fragment>
+    </Provider>
+  );
+};
 Root.propTypes = {
   //store: PropTypes.object,
 };
