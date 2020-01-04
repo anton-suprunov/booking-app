@@ -1,7 +1,7 @@
 //TODO: created admin form submitted with enter without validations
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -16,14 +16,23 @@ import withWidth, {
 } from '@material-ui/core/withWidth';
 
 import Drawer from './Drawer';
-import styles from './app.css';
 
-const Bar = styled(AppBar)`
+
+const Bar = styled(({ isDrawerOpen, ...props }) => <AppBar {...props} />)`
   transition: transform 218ms cubic-bezier(0.4, 0, 0.2, 1);
   left: 0;
   right: 0 !important;
   position: fixed !important;
-  transform: ${props => props.isDrawerOpen ? 'translateX(255px)' : 'none'};
+  transform: ${props => props.isDrawerOpen ? 'translateX(275px)' : 'none'};
+`;
+
+
+const Content = styled.div`
+  transition: padding-left 218ms cubic-bezier(0.4, 0, 0.2, 1);
+  padding-right: 20px !important;
+  padding-top: 64px !important;
+  padding-left: 20px;
+  padding-left: ${props => props.isDrawerOpen ? '295px' : '20px'};
 `;
 
 const App = ({ children, location, width }) => {
@@ -54,24 +63,18 @@ const App = ({ children, location, width }) => {
             <MenuIcon />
           </IconButton>
 
-          <Typography variant="title" color="inherit" >
+          <Typography variant="subtitle1" color="inherit">
             {title}
           </Typography>
           {/*<Button color="inherit">Login</Button>*/}
         </Toolbar>
       </Bar>
     
-      <Drawer 
-        open={isDrawerOpen} 
-        onHandleClick={onDrawerToggle}
-      />
+      <Drawer open={isDrawerOpen} onHandleClick={onDrawerToggle} />
 
-      <div className={classNames({
-        [styles.content]: !isDrawerOpen, 
-        [styles.contentExpanded]: isDrawerOpen,
-      })}>
+      <Content isDrawerOpen={isDrawerOpen}>
         {children}
-      </div>
+      </Content>
     </div>
   );
 };

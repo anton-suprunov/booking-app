@@ -9,7 +9,7 @@ const CheckboxInput = ({
   input: { value, ...inputProps },
   ...props
 }) => {
-  console.log(value, inputProps, props);
+  
   return <Checkbox
     label={label}
     {...inputProps}

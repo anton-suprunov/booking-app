@@ -1,5 +1,7 @@
 const theme = {
-  colorBorder: '#eee',
+  colors: {
+    border: '#eee',
+  },
 };
 
 export default theme;

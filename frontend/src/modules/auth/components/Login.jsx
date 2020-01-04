@@ -40,7 +40,7 @@ const LoginForm = (props) => {
             .email('Invalid email address')
             .required('Email is required'),
           password: Yup.string()
-            .min(5, 'Please use password with more then 5 characters')
+            //.min(5, 'Please use password with more then 5 characters')
             .required('Password is required'),
         })}
         onSubmit={(values, { setSubmitting }) => {

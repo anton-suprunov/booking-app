@@ -6,6 +6,7 @@ import {
   Switch, 
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import { StylesProvider } from '@material-ui/styles';
 
 import configureStore from 'store/configureStore';
 import PrivateRoute from './PrivateRoute';
@@ -25,7 +26,7 @@ const store = configureStore();
 const Root = () => {
   return (
     <Provider store={store}>
-      <React.Fragment>
+      <StylesProvider injectFirst>
         <ThemeProvider theme={Theme}>
           <Router>
             <Switch>
@@ -41,7 +42,7 @@ const Root = () => {
           </Router>
           <GlobalMessage />
         </ThemeProvider>
-      </React.Fragment>
+      </StylesProvider>
     </Provider>
   );
 };

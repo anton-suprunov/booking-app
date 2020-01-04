@@ -5,19 +5,24 @@ module.exports = {
     es6: true,
     node: true,
   },
+  
   "plugins": [
-    'react'
+    'react',
+    'react-hooks'
   ],
-  extends: [
+
+  "extends": [
     'eslint:recommended',
     'plugin:react/recommended'
   ],
-  parser: 'babel-eslint',
-  parserOptions: {
+  
+  "parser": 'babel-eslint',
+  "parserOptions": {
     sourceType: 'module',
     allowImportExportEverywhere: true,
   },
-  rules: {
+
+  "rules": {
     'comma-dangle': ['error', 'always-multiline'],
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
@@ -26,5 +31,8 @@ module.exports = {
     //'no-unused-vars': ['warn'],
     'no-unused-vars': 0,
     'no-console': 0,
+
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   },
 };

@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
-import classnames from 'classnames';
 
+import styled from 'styled-components';
 
+import { withTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 
 import PeopleIcon from '@material-ui/icons/People';
 import DateRangeIcon from '@material-ui/icons/DateRange';
@@ -21,24 +22,27 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-import styles from './app.css';
+const DrawerContainer = styled(Drawer)`
+  width: 275px;
+  .MuiDrawer-paper { width: 275px; }
+`;
 
-const muiStyles = theme => ({
-  drawerHeader: {
-    ...theme.mixins.toolbar,
-  },
-});
+const DrawerHeader = styled(withTheme('div'))`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  min-height: 64px;
+`;
 
 const MenuLink = ({
   linkTo,
   title,
   icon = null,
 }) => (
-  <MenuItem component={props => <Link to={linkTo} {...props} />}>
-    <ListItemIcon>
-      {icon}
-    </ListItemIcon>
-    <ListItemText inset primary={title} />
+  <MenuItem component={Link} to={linkTo}>
+    <ListItemIcon>{icon}</ListItemIcon>
+    <Typography variant="inherit">{title}</Typography>
   </MenuItem>
 );
 MenuLink.propTypes = {
@@ -53,18 +57,12 @@ const AppDrawer = ({
   classes,
 }) => {
   return (
-    <Drawer
-      classes={{ paper: styles.drawer }}
-      open={open}
-      variant="persistent"
-    >
-      <div 
-        className={classnames(styles.drawerHeader, classes.drawerHeader)}
-      >
+    <DrawerContainer open={open} variant="persistent">
+      <DrawerHeader>
         <IconButton onClick={onHandleClick}>
           <ChevronLeftIcon />
         </IconButton>
-      </div>
+      </DrawerHeader>
       <Divider />
 
       <MenuLink 
@@ -104,7 +102,7 @@ const AppDrawer = ({
         title={'Выйти из аккаунта'}
         icon={<LogoutIcon />}
       />
-    </Drawer>
+    </DrawerContainer>
   );
 };
 AppDrawer.propTypes = {
@@ -113,4 +111,4 @@ AppDrawer.propTypes = {
   classes: PropTypes.object,
 };
 
-export default withStyles(muiStyles, { withTheme: true })(AppDrawer);
+export default AppDrawer;

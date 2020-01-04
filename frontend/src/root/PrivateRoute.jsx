@@ -14,8 +14,7 @@ class PrivateRoute extends Component {
 
   componentDidMount() {
     if (!this.props.isAuthentificated) {
-      console.log('auto login attempt');
-      this.props.login();
+      this.props.loginJWT();
     }
   }
 
@@ -26,7 +25,10 @@ class PrivateRoute extends Component {
       hasErrored,
       ...props 
     } = this.props;
-    return (
+    
+    return <Route component={component} {...props} />;
+
+    /*return (
       <React.Fragment>
         { isAuthentificated && <Route component={component} {...props} /> }
         { hasErrored && <Redirect 
@@ -37,7 +39,7 @@ class PrivateRoute extends Component {
         />
         }
       </React.Fragment>
-    );
+    );*/
   }
 }
 PrivateRoute.propTypes = {
@@ -45,7 +47,7 @@ PrivateRoute.propTypes = {
   isAuthentificated: PropTypes.bool,
   hasErrored: PropTypes.bool,
   location: PropTypes.object,
-  login: PropTypes.func,
+  loginJWT: PropTypes.func,
 };
 
 const mapState = state => ({
@@ -54,5 +56,5 @@ const mapState = state => ({
 });
 
 export default connect(mapState, {
-  login: Auth.actions.loginJWT,
+  loginJWT: Auth.actions.loginJWT,
 })(PrivateRoute);

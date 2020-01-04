@@ -32,8 +32,6 @@ class Schedule extends React.Component {
       //weekRange = moment.range(firstDayOfWeek, lastDayOfWeek);
       weekRange = eachDay(firstDayOfWeek, lastDayOfWeek);
 
-    console.log(weekRange);
-
     this.week = weekRange.map( (day) => format(day, 'ddd, DD MMM') ),
     this.times = [ '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'];
   }
